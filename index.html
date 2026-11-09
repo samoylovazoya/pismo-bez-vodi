@@ -1,0 +1,1281 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Письмо руководителю без воды: финальное письмо</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: слева список модулей (на телефоне лента чипов), справа текущий модуль: задания, затем правило и выжимка.
+   Палитра: холодный серый фон, чернильный текст, янтарный акцент (цвет лампы), зелёный и красный только для проверки ответов. */
+:root{
+  --bg:#F2F5F8; --surface:#FFFFFF; --surface2:#EAEFF4; --ink:#16202A; --muted:#566371; --line:#D5DDE5;
+  --accent:#F2B01E; --accent-ink:#1C1500; --accent-text:#8A5A00;
+  --ok:#1D7A4C; --ok-bg:#E3F4EB; --bad:#B3342B; --bad-bg:#FBE7E5; --info-bg:#FFF4D6;
+  --f-display:'Unbounded','Onest',system-ui,sans-serif; --f-body:'Onest',system-ui,-apple-system,'Segoe UI',sans-serif; --f-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E141A; --surface:#161F29; --surface2:#1E2935; --ink:#E7ECF1; --muted:#9AA8B6; --line:#2B3846;
+  --accent:#F2B01E; --accent-ink:#1C1500; --accent-text:#F2B01E;
+  --ok:#52C98F; --ok-bg:#12281F; --bad:#FF8379; --bad-bg:#2E1816; --info-bg:#2A2311; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E141A; --surface:#161F29; --surface2:#1E2935; --ink:#E7ECF1; --muted:#9AA8B6; --line:#2B3846;
+  --accent:#F2B01E; --accent-ink:#1C1500; --accent-text:#F2B01E;
+  --ok:#52C98F; --ok-bg:#12281F; --bad:#FF8379; --bad-bg:#2E1816; --info-bg:#2A2311; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
+  padding-block:20px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1180px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;line-height:1.2;text-wrap:balance;margin:0}
+p{margin:0}
+button,textarea,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between;margin-bottom:20px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand svg{flex:none}
+.brand h1{font-size:19px}
+.brand small{display:block;font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:2px}
+.meter{display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.meter .bar{width:150px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden;border:1px solid var(--line)}
+.meter .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.shell{display:grid;grid-template-columns:270px minmax(0,1fr);gap:28px;align-items:start}
+.nav{position:sticky;top:16px;display:flex;flex-direction:column;gap:6px}
+.nav .grp{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:12px 4px 2px}
+.mod{display:flex;gap:10px;align-items:center;text-align:left;width:100%;background:transparent;border:1px solid transparent;border-radius:10px;padding:10px 12px;cursor:pointer}
+.mod:hover{background:var(--surface)}
+.mod.active{background:var(--surface);border-color:var(--line);box-shadow:0 1px 0 var(--line)}
+.mod .n{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.mod.done .n{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.mod .t{min-width:0;font-size:14.5px;font-weight:500;line-height:1.25}
+.mod .t small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.main{min-width:0;display:flex;flex-direction:column;gap:18px}
+.modhead{display:flex;flex-direction:column;gap:8px;padding-bottom:6px}
+.modhead h2{font-size:26px}
+.modhead .lead{color:var(--muted);max-width:68ch}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-family:var(--f-mono);font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--surface)}
+.chip.opt{border-color:var(--accent);color:var(--accent-text)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.task{display:flex;flex-direction:column;gap:14px}
+.task .head{display:flex;gap:10px;align-items:baseline;justify-content:space-between;flex-wrap:wrap}
+.task .lab{font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.task .st{font-family:var(--f-mono);font-size:12px;padding:2px 8px;border-radius:999px}
+.st.ok{background:var(--ok-bg);color:var(--ok)} .st.mid{background:var(--info-bg);color:var(--accent-text)} .st.bad{background:var(--bad-bg);color:var(--bad)}
+.tq{font-size:17px;font-weight:600;text-wrap:pretty;max-width:70ch}
+.ctx{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:15px;max-width:74ch}
+.ctx .hd{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.7}
+.ctx p+p{margin-top:8px}
+.ctx .s{display:block}
+.ctx .s b{font-family:var(--f-mono);font-weight:500;font-size:12px;color:var(--accent-text);margin-right:6px}
+.ctx ul{margin:6px 0 0;padding-left:20px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:11px 14px;cursor:pointer;min-width:0}
+.opt:hover:not([disabled]){border-color:var(--accent)}
+.opt .bx{flex:none;width:20px;height:20px;border-radius:5px;border:1.5px solid var(--muted);margin-top:2px;display:grid;place-items:center;font-size:13px;line-height:1}
+.opt.single .bx{border-radius:50%}
+.opt.sel{border-color:var(--accent);background:var(--info-bg)}
+.opt.sel .bx{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.right .bx{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt.wrong .bx{background:var(--bad);border-color:var(--bad);color:#fff}
+.opt.miss{border-style:dashed;border-color:var(--ok)}
+.opt .tx{min-width:0;flex:1}
+.opt .why{display:block;font-size:14px;color:var(--muted);margin-top:4px}
+.fb{border-left:4px solid var(--accent);background:var(--info-bg);border-radius:6px;padding:12px 14px;font-size:15px;max-width:74ch}
+.fb p+p{margin-top:6px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 16px;cursor:pointer;font-weight:600;font-size:15px}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.05)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn.sm{padding:5px 10px;font-size:13px;font-weight:500}
+.ord{display:flex;flex-direction:column;gap:8px;counter-reset:o}
+.ord .row{display:flex;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface);min-width:0}
+.ord .row .tx{flex:1;min-width:0}
+.ord .row .no{flex:none;font-family:var(--f-mono);font-size:12px;color:var(--muted);width:22px}
+.ord .row.right{border-color:var(--ok);background:var(--ok-bg)}
+.ord .row.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.mv{display:flex;flex-direction:column;gap:4px;flex:none}
+.mv button{width:30px;height:24px;line-height:1;border:1px solid var(--line);background:var(--surface);border-radius:6px;cursor:pointer;padding:0}
+.mv button:hover:not([disabled]){border-color:var(--ink)}
+.grp-row{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface);display:flex;flex-direction:column;gap:8px;min-width:0}
+.grp-row.right{border-color:var(--ok);background:var(--ok-bg)}
+.grp-row.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.cats{display:flex;gap:6px;flex-wrap:wrap}
+.cat{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:13.5px;cursor:pointer}
+.cat.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.cut{display:flex;flex-direction:column;gap:6px}
+.cut .sn{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 12px;cursor:pointer;min-width:0}
+.cut .sn .tx{flex:1;min-width:0}
+.cut .sn.off .tx{text-decoration:line-through;color:var(--muted)}
+.cut .sn.off{background:var(--surface2)}
+.cut .sn.right{border-color:var(--ok)} .cut .sn.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.cut .sn .tag{flex:none;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.counter{font-family:var(--f-mono);font-size:13px}
+.counter.over{color:var(--bad);font-weight:500}
+textarea{width:100%;min-height:110px;background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical;line-height:1.5}
+textarea:focus,input[type=text]:focus,select:focus{border-color:var(--accent)}
+input[type=text],select{width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:9px 12px}
+.sample{background:var(--surface2);border:1px dashed var(--muted);border-radius:10px;padding:12px 14px;font-size:15px;max-width:74ch}
+.sample .lab{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.chk{display:flex;flex-direction:column;gap:6px}
+.chk label{display:flex;gap:10px;align-items:flex-start;font-size:15px;cursor:pointer}
+.chk input{margin-top:5px;accent-color:#C98A00;width:17px;height:17px}
+.rule{border:1.5px solid var(--accent);background:var(--surface)}
+.rule h3{font-size:16px;margin-bottom:10px}
+.rule ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.locked{color:var(--muted);font-size:15px;border:1.5px dashed var(--line);border-radius:14px;padding:16px 20px}
+.lab2{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.prof{display:flex;flex-direction:column;gap:12px}
+.prof .pr{display:grid;grid-template-columns:120px minmax(0,1fr) 44px;gap:12px;align-items:center;font-size:15px}
+.prof .tr{height:12px;border-radius:6px;background:var(--surface2);border:1px solid var(--line);overflow:hidden}
+.prof .tr i{display:block;height:100%;background:var(--accent)}
+.prof .v{font-family:var(--f-mono);font-size:13px;text-align:right}
+.scn{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.scn button{text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.scn button:hover,.scn button.on{border-color:var(--accent)}
+.scn button.on{background:var(--info-bg)}
+.scn b{font-family:var(--f-display);font-weight:500;font-size:14px}
+.scn span{font-size:14px;color:var(--muted)}
+.facts{margin:6px 0 0;padding-left:20px;font-size:15px}
+.facts li+li{margin-top:2px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-weight:600;font-size:15px}
+.field .hint{font-size:14px;color:var(--muted)}
+.three{display:grid;gap:8px}
+.promptbox{font-family:var(--f-mono);font-size:12.5px;line-height:1.55;min-height:260px;white-space:pre-wrap}
+.cheat{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.cheat .card h3{font-size:15px;margin-bottom:10px}
+.cheat ol,.cheat ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px;font-size:15px}
+.tbl{overflow-x:auto}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:max(20px,env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:10px;font-size:14px;z-index:20}
+.foot{color:var(--muted);font-size:13px;margin-top:10px}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:16px}
+  .nav{position:static;flex-direction:row;overflow-x:auto;gap:8px;padding-bottom:6px}
+  .nav .grp{display:none}
+  .mod{width:auto;flex:none;border-color:var(--line);background:var(--surface)}
+  .mod .t small{display:none}
+  .modhead h2{font-size:22px}
+  .prof .pr{grid-template-columns:90px minmax(0,1fr) 40px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.solo .shell{grid-template-columns:minmax(0,860px)}.solo .nav,.solo .meter{display:none}
+.btn[href]{text-decoration:none}
+</style>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="14" r="9" fill="var(--accent)"/><rect x="12" y="23" width="10" height="3.5" rx="1.2" fill="var(--ink)"/><rect x="13.5" y="28" width="7" height="3" rx="1.2" fill="var(--ink)"/><g stroke="var(--accent)" stroke-width="2" stroke-linecap="round"><path d="M17 1.5v2.2M4.5 14h2.2M27.3 14h2.2M8 5.2l1.5 1.5M26 5.2l-1.5 1.5"/></g></svg>
+      <div><h1>Письмо руководителю без воды</h1><small>Финальное письмо</small></div>
+    </div>
+    <div class="meter"><span id="mtxt">0 из 6 модулей</span><div class="bar"><i id="mbar"></i></div></div>
+  </div>
+  <div class="shell">
+    <nav class="nav" id="nav" aria-label="Модули"></nav>
+    <main class="main" id="main"></main>
+  </div>
+</div>
+
+<script>
+var BUILD='sco2';
+/* ===== НАСТРОЙКА СБОРА ОТВЕТОВ =====
+   Вставьте сюда адрес веб-приложения Google Apps Script (заканчивается на /exec).
+   Пока строка пустая, ответы никуда не отправляются, а задание засчитывается без отправки. */
+var SHEETS_URL='';
+
+/* Три учебных письма и их исправленные версии */
+function mkLetter(l){
+  return '<div class="hd">Кому: '+l.to+'<br>От: '+l.from+'<br>Тема: '+l.subj+'</div>'
+    +'<p>'+l.hi+'</p>'
+    +l.s.map(function(t,i){return '<span class="s"><b>'+(i+1)+'</b>'+t+'</span>';}).join('')
+    +'<p>'+l.sign+'</p>';
+}
+var LET={
+ l1:{to:'Анатолий Сергеевич, коммерческий директор',from:'Марина, руководитель проектного отдела',subj:'Тендеры и загрузка отдела',hi:'Анатолий Сергеевич, добрый день!',sign:'С уважением, Марина',
+  s:['В последние месяцы количество тендеров, в которых мы участвуем, заметно выросло, и нагрузка на проектный отдел увеличилась.',
+     'Мы стараемся успевать везде, но в части случаев не получается: в прошлом квартале мы пропустили несколько заявок, в том числе довольно крупных.',
+     'Ребята работают по вечерам и в выходные, но так долго продолжаться не может.',
+     'Сейчас в отделе четыре инженера-светотехника, и каждый ведёт по несколько проектов параллельно.',
+     'Расчёт освещённости и подготовка спецификации занимают много времени, особенно когда заказчик присылает изменения в ТЗ в последний момент.',
+     'Найти опытных светотехников сейчас непросто, но мы готовы рассматривать кандидатов.',
+     'Хотела бы обсудить с Вами, как нам лучше решить этот вопрос.',
+     'Могу подойти в любое удобное время.']},
+ l2:{to:'Елена Викторовна, операционный директор',from:'Игорь, руководитель отдела закупок',subj:'Поставка драйверов по объекту «Логопарк»',hi:'Елена Викторовна, добрый день!',sign:'С уважением, Игорь',
+  s:['Информирую по ситуации с поставкой драйверов для объекта «Логопарк».',
+     'Заказ был размещён у поставщика 12 августа, подтверждение мы получили 15 августа со сроком поставки 8 недель.',
+     '2 октября поставщик сообщил, что из-за задержки комплектующих отгрузка переносится.',
+     'Мы связались с их менеджером, провели два созвона, он обещает вернуться с новой датой.',
+     'Параллельно запросили предложения у двух других поставщиков, ответ получили пока не от всех.',
+     'Также отмечу, что по договору мы вправе применить штрафные санкции, но юристы пока не смотрели этот вопрос.',
+     'Монтаж на объекте по графику должен начаться в ноябре.',
+     'Будем держать Вас в курсе.']},
+ l3:{to:'Анатолий Сергеевич, коммерческий директор',from:'Дмитрий, менеджер по работе с ключевыми клиентами',subj:'Предложение по клиенту «ТрансЛогистик»',hi:'Анатолий Сергеевич, добрый день!',sign:'С уважением, Дмитрий',
+  s:['«ТрансЛогистик» уже третий год закупает у нас светильники для складов и входит в число наших ключевых клиентов.',
+     'Сейчас они готовят закупку для четырёх новых складов и запросили у нас предложение.',
+     'Нам стало известно, что они также рассматривают другого поставщика.',
+     'Клиенты в этом сегменте всегда ориентируются на цену, поэтому предлагаю сделать им хорошую скидку.',
+     'Это позволит сохранить отношения и закрепить нас как основного поставщика.',
+     'Скидка, конечно, снизит нашу маржу, но, думаю, это оправдано.',
+     'Прошу Вас поддержать это решение.']}
+};
+
+/* Исправленные версии. Цифры условные: в реальном письме здесь будут ваши данные. */
+var FIX={
+ l1:{title:'Письмо 1 без воды',
+  subj:'Согласовать до 20.11: ставка инженера-светотехника, чтобы не терять тендеры',
+  body:['Анатолий Сергеевич, добрый день!',
+   'Прошу согласовать до 20 ноября ещё одну ставку инженера-светотехника в проектный отдел (2,6 млн ₽ в год с налогами).',
+   '<b>Ситуация.</b> В третьем квартале было 9 тендеров, заявки мы подали на 6. Три пропустили, потому что четырём инженерам не хватило времени. Эти три тендера оценивались в 31 млн ₽. При нашей доле побед около 30% мы недополучили порядка 9 млн ₽ за квартал.',
+   '<b>Решение.</b> Взять пятого инженера. После согласования закрою вакансию за 6 недель.',
+   '<b>Цена и выгода.</b> Ставка стоит 2,6 млн ₽ в год. Если ничего не менять, при той же загрузке мы продолжим пропускать около трети тендеров. Ответ нужен до 20 ноября: от этого зависит, успеет ли инженер выйти до конца года.'],
+  changes:['Тема и первая строка содержат просьбу, срок и причину. Исчезло «обсудить».',
+   'Главная мысль (три пропущенных тендера на 31 млн ₽) вынесена в начало и подтверждена цифрами.',
+   'Структура: ситуация, решение, цена и выгода. Шаблон «Предложение / запрос».',
+   'Есть цена решения (2,6 млн ₽), цена бездействия (около 9 млн ₽ за квартал) и срок ответа.',
+   'Убрано лишнее: переработки, трудности найма, «могу подойти в любое время».']},
+ l2:{title:'Письмо 2 без воды',
+  subj:'«Логопарк»: поставка драйверов сдвигается на 6 недель, нужно решение по второму поставщику до 8.10',
+  body:['Елена Викторовна, добрый день!',
+   'Прошу до 8 октября согласовать закупку 40% драйверов (960 из 2 400 шт.) у второго поставщика, чтобы начать монтаж на «Логопарке» по графику 3 ноября.',
+   '<b>Ситуация.</b> 2 октября основной поставщик сообщил, что отгрузка заказа от 15 августа переносится с 10 октября минимум на 6 недель из-за нехватки комплектующих. Новую дату он не назвал. Если ждать, драйверы придут не раньше 21 ноября, и монтаж сдвинется на 18 дней. Штраф по договору с заказчиком 0,1% в день от 24 млн ₽, это 432 тыс. ₽.',
+   '<b>Решение.</b> Второй поставщик отгрузит 960 драйверов за 2 недели. Этого хватает для первых двух зон. Остальные 1 440 дождёмся у основного.',
+   '<b>Цена и выгода.</b> Доплата за 960 драйверов около 0,3 млн ₽ (цена выше на 9%), что меньше штрафа в 0,43 млн ₽. Если ничего не менять, платим штраф и рискуем репутацией у заказчика. Отдельно юристы оценивают неустойку с основного поставщика, результат пришлю до 10 октября.'],
+  changes:['Вместо «информирую» есть просьба и срок. Хронология заменена выводом.',
+   'Главная мысль (монтаж под угрозой, нужен план Б) стоит в первой строке, а не в седьмом предложении.',
+   'Появились цифры: на сколько сдвигается поставка, размер штрафа, стоимость решения.',
+   'Сравниваются два варианта: доплатить второму поставщику или ждать.',
+   'Процесс («провели два созвона») убран, остался результат. Риск штрафа стал частью цены вопроса.']},
+ l3:{title:'Письмо 3 без воды',
+  subj:'«ТрансЛогистик»: согласовать скидку 6% на 4 склада (14 млн ₽) до 12.11',
+  body:['Анатолий Сергеевич, добрый день!',
+   'Прошу до 12 ноября согласовать скидку 6% для «ТрансЛогистик» на закупку светильников для четырёх новых складов (14 млн ₽ без скидки).',
+   '<b>Ситуация.</b> Клиент закупает у нас третий год, за два года купил на 21 млн ₽. Для новых складов запросил предложения у нас и ещё у одного поставщика. По словам их закупщика, цена конкурента ниже нашей примерно на 5%. Решение клиент примет до 20 ноября.',
+   '<b>Цена и выгода.</b> Скидка 6% стоит 0,84 млн ₽: маржа по контракту снизится с 22% до 17%, то есть с 3,1 до 2,2 млн ₽. Это даёт цену чуть ниже конкурента. Если ничего не менять, рискуем потерять заказ целиком (3,1 млн ₽ маржи) и клиента, который принёс 21 млн ₽ за два года.'],
+  changes:['«Хорошая скидка» превратилась в 6% и сумму 0,84 млн ₽. Теперь директор может ответить «да» или «нет».',
+   'Обобщение «клиенты всегда ориентируются на цену» заменено фактом: цена конкурента ниже на 5%, источник назван.',
+   'Показаны обе стороны: потеря маржи в цифрах и риск потерять заказ и клиента.',
+   'Есть срок: решение до 12 ноября, клиент решает до 20 ноября.']}
+};
+
+var MODS = [];
+
+/* ---------- 0. Диагностика ---------- */
+MODS.push({
+  id:'m0', title:'Диагностика', time:'7 мин', optional:false,
+  lead:'Прочитайте письмо и ответьте на шесть вопросов. Ничего заранее объяснять не будем: сначала посмотрим, где вы сейчас. В конце модуля покажем, как это письмо выглядит без воды.',
+  intro:'<h3>Как работает тренажёр</h3>'
+    +'<p>Мы учимся писать письма руководителю так, чтобы он понял суть за минуту и принял решение. Теории мало: в каждом модуле сначала задания, потом короткое правило.</p>'
+    +'<p style="margin-top:8px">Курс основан на книге Павла Безручко «Без воды. Как писать предложения и отчеты для первых лиц». Кейсы, письма и задания адаптированы под светотехническую компанию.</p>'
+    +'<ul class="facts">'
+    +'<li><b>Время.</b> Шесть учебных модулей занимают около часа, финальное письмо — ещё 15 минут отдельным заданием. Можно проходить по частям: прогресс сохраняется в LMS.</li>'
+    +'<li><b>Что получите.</b> Результат диагностики, правильные версии трёх разобранных писем, краткую памятку в PDF, а в финальном задании своё письмо с проверкой через ИИ.</li>'
+    +'<li><b>Ошибки.</b> Это нормально, они здесь для разбора. В большинстве заданий можно пройти заново, но диагностику лучше сделать честно с первого раза.</li>'
+    +'<li><b>Данные.</b> Все компании и цифры условные. Не вставляйте в тренажёр реальные данные клиентов, цены контрактов и персональные данные.</li></ul>',
+  tasks:[
+    {id:'d1', type:'single', lab:'Цель', diag:'Цель',
+     ctx:mkLetter(LET.l1),
+     q:'Что директор должен сделать после прочтения этого письма?',
+     options:[
+      {t:'Согласовать новую ставку инженера', why:'Это догадка руководителя. В письме нет слов «ставка» или «бюджет».'},
+      {t:'Разрешить не участвовать в части тендеров', why:'Тоже один из возможных ответов, но автор об этом не просит.'},
+      {t:'Помочь с поиском кандидатов', why:'Автор лишь упоминает, что готов рассматривать кандидатов [6].'},
+      {t:'Из письма это однозначно понять нельзя', ok:true, why:'Верно. «Обсудить, как лучше решить вопрос» не называет решения. Руководителю приходится угадывать, чего от него хотят.'}
+     ]},
+    {id:'d2', type:'single', noShuffle:true, lab:'Структура', diag:'Структура', ctxFrom:'d1',
+     q:'Какое предложение содержит главную мысль, которая должна открывать письмо?',
+     options:[
+      {t:'1. Тендеров стало больше, нагрузка на отдел выросла', why:'Это фон. Он объясняет, но не создаёт причины для решения.'},
+      {t:'2. Мы пропустили несколько заявок, в том числе довольно крупных', ok:true, why:'Верно. Потери заказов и есть причина, ради которой пишется письмо. Она стоит в середине первого абзаца и тонет.'},
+      {t:'5. Расчёты и спецификации занимают много времени у инженеров', why:'Причина проблемы, а не главная мысль.'},
+      {t:'7. Хотела бы обсудить с Вами, как нам лучше решить этот вопрос', why:'Это размытая просьба, а не мысль.'}
+     ]},
+    {id:'d3', type:'multi', lab:'Конкретика', diag:'Конкретика', ctxFrom:'d1',
+     q:'Где нельзя проверить, что именно имеется в виду? Нет цифр, сроков, названий. Отметьте все.',
+     options:[
+      {t:'1. «заметно выросло»', ok:true, why:'На сколько тендеров, с какого уровня до какого?'},
+      {t:'2. «несколько заявок, довольно крупных»', ok:true, why:'Сколько заявок и на какую сумму?'},
+      {t:'3. «работают по вечерам и в выходные»', ok:true, why:'Сколько часов переработки? Без цифры это оценка.'},
+      {t:'4. «четыре инженера-светотехника»', why:'Здесь как раз есть конкретное число.'},
+      {t:'5. «занимают много времени»', ok:true, why:'Сколько часов на один тендер?'}
+     ]},
+    {id:'d4', type:'multi', lab:'Краткость', diag:'Краткость', ctxFrom:'d1',
+     q:'Какие предложения можно вычеркнуть, и письмо ничего не потеряет? Отметьте все.',
+     options:[
+      {t:'2. Пропустили несколько заявок', why:'Это ядро письма. Нужно оставить и уточнить цифрами.'},
+      {t:'3. Ребята работают по вечерам и в выходные', ok:true, why:'Эмоциональный довод без фактов. Решению не помогает.'},
+      {t:'4. В отделе четыре инженера', why:'Нужно для оценки нагрузки. Оставить.'},
+      {t:'6. Найти опытных светотехников непросто', ok:true, why:'Общее замечание без цифр. Если срок найма важен, дайте его числом.'},
+      {t:'8. Могу подойти в любое время', ok:true, why:'Вместо этого лучше указать срок, до которого нужен ответ.'}
+     ]},
+    {id:'d5', type:'multi', lab:'Цель', diag:'Цель',
+     q:'В какой формулировке письма названо действие, которое должен совершить руководитель? Отметьте все.',
+     options:[
+      {t:'«Прошу согласовать до 20 ноября ставку ещё одного инженера-светотехника»', ok:true, why:'Названы действие (согласовать), предмет и срок.'},
+      {t:'«Хочу обсудить с Вами, как нам лучше организовать работу с тендерами»', why:'Обсуждение не называет решения. Неясно, что руководитель должен сделать.'},
+      {t:'«Прошу выбрать до 20 ноября: добавить ставку или не подавать заявки на тендеры до 5 млн ₽»', ok:true, why:'Руководитель выбирает из двух конкретных вариантов к дате.'},
+      {t:'«Информирую о ситуации с загрузкой отдела тендеров»', why:'Информирование само по себе не требует действия руководителя.'},
+      {t:'«Нужна Ваша помощь, чтобы мы справлялись с растущим числом тендеров»', why:'Какая помощь и к какому сроку? Руководителю придётся уточнять.'},
+      {t:'«Прошу разрешить не участвовать в тендерах до 5 млн ₽ до конца года»', ok:true, why:'Действие (разрешить), граница и срок названы.'}
+     ]},
+    {id:'d6', type:'multi', lab:'Структура', diag:'Структура', ctxFrom:'d1',
+     q:'Что должно быть в первых двух-трёх строках письма директору? Отметьте все.',
+     options:[
+      {t:'Что вы просите и к какому сроку нужен ответ', ok:true, why:'Просьба и срок в начале позволяют решить, читать ли дальше и когда ответить.'},
+      {t:'Главный факт цифрами: сколько тендеров и на какую сумму потеряно', ok:true, why:'Потеря в цифрах объясняет, почему письмо важно.'},
+      {t:'Как устроен отдел и сколько в нём людей по должностям', why:'Это справка. Она нужна внутри письма, но не в начале.'},
+      {t:'Из чего сложился расчёт потерянной выручки', why:'Методика нужна тому, кто сомневается в цифре. Её место ниже или в приложении.'},
+      {t:'Что случится, если ничего не менять', ok:true, why:'Цена бездействия показывает масштаб вопроса.'},
+      {t:'Благодарность команде за работу в выходные', why:'Это эмоциональный довод. Он не помогает принять решение.'}
+     ]}
+  ],
+  profile:true,
+  fixed:['l1'],
+  rule:{title:'Что вы только что увидели', points:[
+    'Письмо без названного желаемого действия руководителя нельзя ни написать хорошо, ни оценить.',
+    'Главное (потеря тендеров) стоит в середине и тонет в общих словах.',
+    'Часть фраз нельзя проверить, часть можно убрать. Это и есть «вода».',
+    'Дальше мы по очереди разберём каждую из четырёх осей.'
+  ]},
+  recap:'Чего именно не хватало этому письму?'
+});
+
+/* ---------- 1. Руководитель ---------- */
+MODS.push({
+  id:'m1', title:'Руководитель и его вопросы', time:'8 мин', optional:false,
+  lead:'Топ-менеджер читает письмо между двумя встречами. Здесь мы тренируем два решения: писать ли вообще и что он спросит первым.',
+  tasks:[
+    {id:'r1', type:'group', lab:'Писать или решить самому',
+     q:'Распределите ситуации. Ориентир: выходит ли решение за ваши лимиты, бюджет или условия договора?',
+     cats:['Решу сам','Пишу руководителю'],
+     items:[
+      {t:'Заменить модель светильника в спецификации на аналог с теми же характеристиками и по той же цене', cat:0, why:'Договор и бюджет не меняются. Достаточно упомянуть в статусе.'},
+      {t:'Клиент просит скидку 7%, а вы вправе давать без согласования до 5%', cat:1, why:'Решение выходит за ваш лимит.'},
+      {t:'Монтажников перевели с дневной смены на вечернюю, срок сдачи объекта не меняется', cat:0, why:'Это внутренняя организация работ без влияния на договор.'},
+      {t:'Поставщик поднял цену на 3%. В договоре на 22 млн ₽ цена фиксированная, маржа упадёт с 18% до 15%', cat:1, why:'Падает маржа по договору, и компенсировать её придётся из чужого бюджета.'},
+      {t:'Нужны запасные LED-модули на 40 тыс. ₽, в бюджете объекта на них есть строка', cat:0, why:'Расход внутри утверждённого бюджета.'},
+     ]},
+    {id:'r2', type:'multi', lab:'Что нужно для решения',
+     ctx:'<p>Вы пишете коммерческому директору: предлагаете закупить 200 светильников у нового поставщика вместо текущего. Письмо должно дать ему всё, чтобы решить «да» или «нет» без уточняющих вопросов.</p>',
+     q:'На какие вопросы директор должен найти ответ в письме? Отметьте все.',
+     options:[
+      {t:'Сколько это стоит и как цена соотносится с текущим поставщиком?', ok:true, why:'Цена вопроса, с бенчмарком для сравнения.'},
+      {t:'Что мы получим: экономию, сроки, качество?', ok:true, why:'Отдача в цифрах.'},
+      {t:'Что будет, если остаться с текущим поставщиком?', ok:true, why:'Вариант «ничего не менять». Без него невозможно оценить выгоду.'},
+      {t:'Какие риски у перехода и как мы их снижаем?', ok:true, why:'Например, срыв первой партии. Руководитель думает о том, что может пойти не так.'},
+      {t:'Из какого бюджета деньги и нужно ли что-то перераспределять?', ok:true, why:'Источник ресурса. Лучше ответить до того, как спросят.'},
+      {t:'До какого числа нужно решение и почему?', ok:true, why:'Срок и причина срочности, например, цена действует до даты.'},
+      {t:'Какие сертификаты и допуски есть у нового поставщика?', why:'Это деталь, которую вы проверяете сами до письма. В письме достаточно сказать, что проверено.'},
+      {t:'Как давно поставщик на рынке и сколько у него клиентов?', why:'Полезный фон, но решения не меняет. Лучше показать результат тестовой партии.'},
+      {t:'Кто будет проводить входной контроль партии?', why:'Рабочий вопрос, который решается внутри вашей команды.'},
+      {t:'Какие светотехнические характеристики у предлагаемых моделей?', why:'Технические детали уместны в приложении. Руководитель решает по цене, срокам и рискам.'}
+     ]}
+
+  ],
+  rule:{title:'Правила для письма топ-менеджеру', points:[
+    'Пишите о том, что в его зоне решения. Мелочи решайте сами. Если мелочь без него не решить, делайте вопрос готовым к решению за минуту.',
+    'Говорите про результат и эффект, а не про процесс («получили 40 заявок», а не «проделали работу»).',
+    'У руководителя всегда три вопроса: сколько стоит, что получим, что будет, если ничего не менять.',
+    'Он проверяет вас по фактам. Чем конкретнее, тем больше доверия.'
+  ]},
+  recap:'Что вы теперь проверите, прежде чем писать руководителю?'
+});
+
+/* ---------- 2. Цель ---------- */
+MODS.push({
+  id:'m2', title:'Цель письма: желаемое действие руководителя', time:'10 мин', optional:false,
+  lead:'Хорошее письмо добивается конкретного действия руководителя: согласия, решения, ресурса, встречи. Здесь вы учитесь формулировать это действие и выносить его в тему письма.',
+  tasks:[
+    {id:'g1', type:'single', lab:'Масштаб цели',
+     ctx:'<p>Вы менеджер по работе с крупными клиентами. Вы узнали, что девелопер «Северный квартал» выбирает подрядчика на освещение жилого комплекса на 2 400 квартир. Вы с ними ещё не работали. Вы пишете письмо директору по строительству. Какая цель письма самая удачная?</p>',
+     q:'Выберите цель.',
+     options:[
+      {t:'Рассказать о нашей компании и опыте, чтобы директор запомнил нас как надёжного подрядчика', why:'Цели нет. Руководитель не поймёт, что ему делать.'},
+      {t:'Получить согласие на поставку светильников по нашей цене для всего жилого комплекса', why:'Слишком сильная просьба для первого контакта. Шанс почти нулевой.'},
+      {t:'Получить согласие на 30-минутную встречу, где покажем два наших жилых комплекса', ok:true, why:'Адекватный шаг: достижимо, конкретно, ведёт к следующему этапу.'},
+      {t:'Попросить директора заранее посмотреть кейсы на нашем сайте и дать обратную связь', why:'Слишком слабо. Даже если прочитает, диалог не начнётся.'}
+     ]},
+    {id:'g4', type:'rewrite', min:4, lab:'Тема письма = действие',
+     pre:'<p><b>Тема письма и есть желаемое действие.</b> Руководитель решает, открывать ли письмо и насколько срочно, по теме. Поэтому в теме нужны глагол действия («согласовать», «выбрать», «утвердить»), срок и суть.</p>',
+     ctx:'<p>Вам нужно согласие директора на выезд двух инженеров на объект заказчика 10–12 ноября. Затраты 86 тыс. ₽. Без выезда заказчик отложит приёмку объекта. Ответ нужен до 7 ноября. Исходная тема в черновике: «Выезд на объект».</p>',
+     q:'Перепишите тему письма так, чтобы руководитель сразу понял, что от него нужно.',
+     sample:'Согласовать до 7.11: выезд двух инженеров на объект 10–12.11 (86 тыс. ₽), иначе приёмку отложат',
+     checks:['Начинается с действия, которое нужно от руководителя','Указан срок ответа','Есть суть и цена вопроса','Понятна без открытия письма','Не длиннее 15–20 слов']},
+    {id:'g2', type:'group', lab:'Этап вопроса',
+     pre:'<p><b>Коротко про этапы.</b> Любой вопрос проходит пять этапов. Просьба в письме должна соответствовать текущему этапу.</p>'
+       +'<ul class="facts">'
+       +'<li><b>Анализ.</b> Ситуация неясна, причины неизвестны. Просим согласия на анализ или исследование.</li>'
+       +'<li><b>Выводы.</b> Анализ готов. Просим согласиться с выводами.</li>'
+       +'<li><b>Подход.</b> Выводы приняты. Просим одобрить принципиальное решение: как будем решать.</li>'
+       +'<li><b>План.</b> Подход согласован. Просим утвердить шаги, сроки и бюджет.</li>'
+       +'<li><b>Действия.</b> План одобрен. Согласуем конкретное действие, если без руководителя его не сделать.</li></ul>'
+       +'<p style="margin-top:8px">Нельзя торопить события (просить план, пока нет анализа) и затягивать (предлагать анализ, когда подход уже ясен).</p>'
+       +'<p style="margin-top:8px"><b>Правило «плюс шаг».</b> Когда вы отвечаете на запрос руководителя, делайте на один этап больше. Провели анализ: пришлите и выводы. Дали выводы: добавьте подход. Это пригодится в следующих заданиях.</p>',
+     q:'Определите, какого действия руководителя нужно просить на каждом этапе. Цель должна соответствовать этапу.',
+     cats:['Анализ','Выводы','Подход','План','Действия'],
+     items:[
+      {t:'Руководитель одобрил переход на второго поставщика драйверов, но не знает, кто и когда его проверит и сколько это будет стоить', cat:3, why:'Решение принято, не хватает шагов, сроков и бюджета. Просим утвердить план.'},
+      {t:'Продажи по сегменту складов упали на 18%. Версий несколько, какая верная, не ясно', cat:0, why:'Ситуация не ясна. Просим согласия на анализ, чтобы выяснить причину.'},
+      {t:'План и бюджет тестов утверждены. Остался договор с новым поставщиком, подписать его может только руководитель', cat:4, why:'Остаётся конкретное действие, которое без руководителя не сделать.'},
+      {t:'Мы разобрали срывы за квартал: 70% приходится на одного поставщика драйверов. Руководитель с этим результатом пока не знаком', cat:1, why:'Анализ готов. Просим согласиться с выводом.'},
+      {t:'С выводом согласились: основная причина срывов в одном поставщике. Ещё не решено, что делать: искать замену, добавить второго или договариваться с текущим', cat:2, why:'Вывод принят. Нужно выбрать принципиальный подход, а не шаги.'}
+     ]},
+    {id:'g3', type:'single', lab:'Плюс шаг',
+     pre:'<p><b>Правило «плюс шаг».</b> Думайте и предлагайте на один этап дальше запроса.</p><ul class="facts"><li>Запросили информацию: проверьте и проанализируйте её, пришлите выводы, если они полезны. Не навязывайте рекомендации.</li><li>Запросили анализ и выводы: добавьте подход и рекомендации. План пока не предлагайте.</li><li>Запросили подход: добавьте план действий и бюджет.</li></ul>',
+     ctx:'<p>Коммерческий директор просит: «Пришлите справку по отгрузкам по клиентам за квартал». Что отправить?</p>',
+     q:'Выберите лучший вариант ответа.',
+     options:[
+      {t:'Только таблицу с отгрузками по каждому клиенту за квартал, чтобы не отвечать за интерпретацию', why:'Запрос выполнен формально. Директору самому придётся искать, что в цифрах важно.'},
+      {t:'Таблица, в которой выделены клиенты с изменением больше 10%, и подпись к каждому', why:'Аккуратная подача данных, но общий вывод остался за директором: что происходит по сегментам и почему.'},
+      {t:'Таблица, вывод «в ритейле рост 14%, в промышленности падение 9%» и две гипотезы о причинах', ok:true, why:'«Плюс шаг»: запросили данные, получили данные и выводы. Гипотезы честно названы гипотезами.'},
+      {t:'Таблица, те же выводы и рекомендация сократить скидки в ритейле, усилить промышленность и пересмотреть годовой бюджет продаж', why:'Слишком далеко. Причины ещё не проверены, а рекомендация уже есть. Директор такой совет не примет на веру.'},
+      {t:'Таблица и вопрос: «Для какого решения вам нужна справка?», чтобы подготовить нужный разрез', why:'Уточнить можно, но не вместо результата. Лучше отправить таблицу с выводами и в конце спросить, нужен ли другой разрез.'}
+     ]}
+  ],
+  rule:{title:'Как ставить цель', points:[
+    'Цель формулируется как желаемое действие руководителя, а не «хочу рассказать».',
+    'Желаемое действие читается уже в теме письма: глагол, срок, суть.',
+    'Масштаб действия должен быть достижимым: просите то, что руководитель может и готов сделать. Большую цель разбейте на шаги.',
+    'Цель привязана к этапу: анализ, выводы, подход, план, действия. Не перескакивайте и не затягивайте.',
+    'Отвечая на запрос, добавьте один шаг: данные превращайте в вывод, вывод в рекомендацию.',
+    'Для себя формулируйте цель прямо. В письме смягчайте: «Прошу согласовать…» вместо «Хочу, чтобы вы одобрили…».'
+  ]},
+  recap:'Как вы теперь формулируете цель письма?'
+});
+
+/* ---------- 3. Структура ---------- */
+MODS.push({
+  id:'m3', title:'Структура: главное в начало', time:'12 мин', optional:false,
+  lead:'Руководитель принимает решение по первым строкам. Здесь вы выстраиваете письмо от главного к деталям.',
+  intro:'<h3>Три шаблона: коротко</h3>'
+    +'<p>В любом шаблоне главное стоит в начале, а данные и подробности идут в конце. Выберите шаблон по цели письма.</p>'
+    +'<ul class="facts">'
+    +'<li><b>Предложение / запрос.</b> Когда просите решение, ресурсы или согласие. Ситуация, возможное решение, цена вопроса и выгода. Если решение дорогое или рискованное, добавьте план действий и ресурсы.</li>'
+    +'<li><b>План — факт.</b> Когда отчитываетесь о выполнении плана или поручения. Резюме с главными мыслями и эффектом, затем статус: что сделано, что нет, почему, когда будет, сколько потрачено.</li>'
+    +'<li><b>Выводы — рекомендации.</b> Когда это аналитический отчёт или исследование. Цель отчёта, выводы, рекомендации, затем данные и метод.</li></ul>'
+    +'<p style="margin-top:8px">Если ни один шаблон не подходит, запишите вопросы, которые задаст руководитель, и ответьте на них по порядку.</p>',
+  tasks:[
+    {id:'l2a', type:'multi', lab:'Письмо 2: что в начало',
+     ctx:mkLetter(LET.l2),
+     q:'Какие предложения несут главную мысль и должны открывать письмо? Отметьте все.',
+     options:[
+      {t:'1. «Информирую по ситуации с поставкой»', why:'Вводная фраза, а не мысль. Письмо начинается с неё, но она ничего не сообщает.'},
+      {t:'3. Поставщик сообщил, что отгрузка переносится', ok:true, why:'Это событие, из-за которого появилось письмо.'},
+      {t:'4. Провели два созвона с менеджером', why:'Процесс. Руководителю важен результат, а не количество созвонов.'},
+      {t:'5. Запросили предложения у двух других поставщиков', why:'Это возможное решение. Оно нужно, но идёт после главной мысли.'},
+      {t:'7. Монтаж по графику начинается в ноябре', ok:true, why:'Последствие и цена вопроса: срок объекта под угрозой. В письме оно стоит предпоследним, хотя должно быть в начале.'},
+      {t:'8. Будем держать Вас в курсе', why:'Закрывающая фраза без содержания.'}
+     ]},
+    {id:'l2b', type:'single', lab:'Письмо 2: шаблон', ctxFrom:'l2a',
+     q:'Если переписать это письмо правильно, какой шаблон и какое действие руководителя нужны?',
+     options:[
+      {t:'«План — факт»: отчитаться, что сделано по заказу, что нет и когда это будет готово', why:'Здесь не нужен отчёт по плану. Заказ сорван, и нужно решение.'},
+      {t:'«Предложение / запрос»: описать ситуацию и решение, попросить согласовать его к дате', ok:true, why:'Верно. Автору нужно решение руководителя, значит это запрос. Тогда структура: просьба, ситуация, решение, цена и выгода.'},
+      {t:'«Выводы — рекомендации»: показать анализ причин задержки и предложить меры', why:'Причина известна (нет комплектующих у поставщика). Анализ здесь не нужен.'},
+      {t:'Информационное письмо без просьбы, чтобы руководитель был в курсе событий', why:'Так и написано исходное письмо. Из-за этого руководителю неясно, что делать.'}
+     ]},
+
+    {id:'s1', type:'order', lab:'Собери запрос',
+     q:'Руководитель производства просит перенести 1,2 млн ₽ между статьями бюджета. Расставьте блоки письма в лучшем порядке.',
+     items:[
+      {t:'Прошу согласовать перенос 1,2 млн ₽ со статьи «Ремонт оборудования» на статью «Закупка компонентов» до 5 ноября.', why:'Запрос: что вы просите и до какого срока. Самое главное идёт первым.'},
+      {t:'В октябре заказы выросли на 22%. Компонентов на складе хватит на 9 дней, а не на 25, как планировалось.', why:'Ситуация: коротко, с цифрами.'},
+      {t:'Предлагаю заказать компоненты у двух поставщиков, это закрывает дефицит к 20 ноября.', why:'Решение: что именно сделаем.'},
+      {t:'Деньги берём из статьи «Ремонт»: плановый ремонт линии всё равно в январе. Если ничего не менять, простой линии на 3 дня обойдётся в 2,1 млн ₽.', why:'Цена вопроса и выгода, с вариантом «ничего не менять».'},
+      {t:'Решение нужно до 5 ноября: поставщики держат цену до 7 ноября.', why:'Срок и причина срочности. Завершает письмо.'}
+     ]},
+    {id:'s2', type:'group', lab:'Выбор шаблона',
+     q:'К какому шаблону относится каждая задача?',
+     cats:['Предложение / запрос','План — факт','Выводы — рекомендации'],
+     items:[
+      {t:'Предлагаем открыть склад-хаб в Казани, нужен бюджет 6 млн ₽', cat:0, why:'Просим согласия на решение и ресурсы.'},
+      {t:'Директор запросил отчёт, как выполнен план внедрения шаблона КП за квартал', cat:1, why:'Что сделано, что нет, сколько потрачено.'},
+      {t:'Исследовали причины возвратов светильников и хотим показать выводы и рекомендации', cat:2, why:'Аналитический отчёт: сначала выводы, потом данные.'},
+      {t:'Клиент требует новый срок поставки. Нужно согласовать скидку 5%', cat:0, why:'Запрос на решение.'}
+     ]},
+    {id:'s3', type:'group', lab:'Без пересечений',
+     pre:'<b>Без пересечений</b> значит: каждое замечание попадает ровно в одну группу, и группы не про одно и то же. Если сомневаетесь, спросите себя, какой вопрос руководитель задаст по этому пункту. Следствия не считаются отдельной мыслью: их лучше показать как цену бездействия.',
+     ctx:'<p>Вы изучили процесс согласования коммерческих предложений. Выписали девять замечаний. Для письма это слишком много. Сгруппируйте их так, чтобы получились три главные мысли без пересечений.</p>',
+     q:'Куда отнести каждое замечание? Часть замечаний только следствия.',
+     cats:['Контроль цены: маржа и скидки','Качество расчётов и документов','Сроки согласования: юристы и статус','Следствие, не причина'],
+     items:[
+      {t:'КП уходят клиентам без проверки маржи', cat:0, why:'Контроль цены.'},
+      {t:'Скидки согласуют в мессенджерах', cat:0, why:'Тоже контроль цены и скидок.'},
+      {t:'Нет единого шаблона светотехнического расчёта', cat:1, why:'Качество расчётов.'},
+      {t:'Менеджеры считают освещённость по-разному', cat:1, why:'Тоже качество расчётов.'},
+      {t:'Технические спецификации правят вручную после согласования', cat:1, why:'Качество документов.'},
+      {t:'Юристы получают договор в последний день', cat:2, why:'Причина задержек согласования.'},
+      {t:'Руководитель не видит статуса КП', cat:2, why:'Проблема прозрачности сроков.'},
+      {t:'Клиенты ждут ответа по неделе', cat:3, why:'Результат перечисленных причин, а не отдельная проблема.'},
+      {t:'Дважды за квартал сдвигали сроки из-за поздней проверки договора', cat:3, why:'Тоже следствие. Его можно привести как цену бездействия.'}
+     ]},
+    {id:'s4', type:'single', lab:'Тема письма',
+     q:'Какая тема письма лучше всего помогает руководителю понять суть до открытия?',
+     options:[
+      {t:'Допуск монтажников на склад в выходные: прошу вернуться с ответом по возможности', why:'Просьба вернуться с ответом без срока и сути. Откроют письмо не сразу.'},
+      {t:'Срочно! Нужна помощь по складу, пожалуйста, ответьте как можно быстрее сегодня', why:'Без контекста. Раздражает, а не мотивирует.'},
+      {t:'Допуск на склад 8–9.11, ответ до 5.11, иначе приёмку перенесут', ok:true, why:'В теме главная мысль: что нужно, к какому сроку и какая цена вопроса.'},
+      {t:'Информация по объекту: приёмка, склад, монтаж, график выходных работ и допуски', why:'Универсальная тема, которая подойдёт к любому письму.'}
+     ]}
+  ],
+  fixed:['l2'],
+  rule:{title:'Как строить письмо', points:[
+    'Сначала просьба или вывод, потом пояснения. Контекст напоминайте в одной-двух строках.',
+    'Главных мыслей мало: две-четыре. Они работают на цель и не пересекаются.',
+    'Шаблон «Предложение/запрос»: ситуация, решение, цена и выгода, при необходимости план и ресурсы.',
+    'Шаблон «План — факт»: резюме, затем таблица «что сделано, что нет, почему, когда, сколько потрачено».',
+    'Шаблон «Выводы — рекомендации»: цель, выводы, рекомендации, затем данные и метод.',
+    'Если шаблон не подходит, запишите вопросы руководителя и ответьте на них по порядку. Вопросы станут заголовками.',
+    'Тема письма должна нести главную мысль.'
+  ]},
+  recap:'Как теперь будет выглядеть первая строка вашего письма?'
+});
+
+/* ---------- 4. Содержание ---------- */
+MODS.push({
+  id:'m4', title:'Содержание: цифры и простой язык', time:'12 мин', optional:false,
+  lead:'Здесь тренируем то, что делает текст убедительным: цена вопроса, конкретика, понятные предложения.',
+  intro:'<h3>Как делать текст убедительным: коротко</h3>'
+    +'<p>Руководитель проверяет вас по фактам. Три типа фраз вызывают у него вопросы:</p>'
+    +'<ul class="facts">'
+    +'<li><b>Оценочные суждения:</b> «плохо», «сложно», «заметно выросло». Их нельзя проверить, замените цифрой.</li>'
+    +'<li><b>Обобщения:</b> «все клиенты», «всегда», «постоянно». Назовите, сколько и кто именно.</li>'
+    +'<li><b>Упущения:</b> «снизили затраты» без указания, на сколько и по сравнению с чем.</li></ul>'
+    +'<p style="margin-top:8px">Цена и отдача называются в цифрах и с ориентиром для сравнения: «2,6 млн ₽ в год против 9 млн ₽ упущенной выручки». Пишите простыми словами и короткими предложениями.</p>',
+  tasks:[
+    {id:'l3a', type:'multi', lab:'Письмо 3: что нужно директору',
+     ctx:mkLetter(LET.l3),
+     q:'Директор должен ответить «да» или «нет» на просьбу о скидке. Какие данные ему нужны в письме? Отметьте все.',
+     options:[
+      {t:'Размер скидки в процентах и в рублях', ok:true, why:'Без этого поддержать «решение» нельзя.'},
+      {t:'Объём закупки и сумма контракта', ok:true, why:'Показывает масштаб вопроса.'},
+      {t:'Насколько снизится маржа, в цифрах', ok:true, why:'Цена решения. В письме она названа словами.'},
+      {t:'Что будет, если скидку не давать', ok:true, why:'Вариант «ничего не менять» нужен для сравнения.'},
+      {t:'Откуда известно о конкуренте и на сколько у него дешевле', ok:true, why:'Источник и бенчмарк. Без них фраза «рассматривают другого» остаётся слухом.'},
+      {t:'До какого числа клиент примет решение', ok:true, why:'Срок, к которому нужен ответ.'},
+      {t:'История закупок клиента по каждому году и складу', why:'Лишняя подробность. Достаточно итога за период.'},
+      {t:'Технические характеристики предлагаемых светильников', why:'Не влияет на решение о скидке.'}
+     ]},
+    {id:'l3b', type:'rewrite', lab:'Письмо 3: перепиши цену вопроса',
+     ctx:'<p>В письме три предложения о скидке: «Клиенты в этом сегменте всегда ориентируются на цену, поэтому предлагаю сделать им хорошую скидку. Это позволит сохранить отношения и закрепить нас как основного поставщика. Скидка, конечно, снизит нашу маржу, но, думаю, это оправдано.»</p><ul><li>Закупка для 4 складов: 14 млн ₽ без скидки, маржа 22%.</li><li>Цена конкурента ниже нашей примерно на 5% (по словам закупщика клиента).</li><li>Предлагаемая скидка 6%. Маржа после скидки около 17%.</li><li>За два года клиент купил у нас на 21 млн ₽.</li></ul>',
+     q:'Напишите один абзац вместо этих трёх предложений: что предлагаем, что это стоит, что получим и что будет, если ничего не менять.',
+     sample:'Предлагаю скидку 6% (0,84 млн ₽). Она даёт цену чуть ниже конкурента, который дешевле нас примерно на 5%. Маржа по контракту снизится с 22% до 17%, то есть с 3,1 до 2,2 млн ₽. Если ничего не менять, рискуем потерять заказ целиком и клиента, который купил у нас на 21 млн ₽ за два года.',
+     checks:['Скидка названа в процентах и в рублях','Есть ориентир для сравнения: цена конкурента','Потеря маржи показана цифрами','Есть вариант «ничего не менять»','Нет обобщений («всегда», «хорошая»)']},
+
+    {id:'c1', type:'multi', lab:'Найди воду',
+     ctx:'<div class="hd">Отчёт о складской логистике заказчика</div>'
+       +'<span class="s"><b>1</b>Складская логистика организована плохо.</span>'
+       +'<span class="s"><b>2</b>Задержки отгрузок происходят часто.</span>'
+       +'<span class="s"><b>3</b>В прошлом квартале 14 из 62 отгрузок (23%) ушли с опозданием больше 2 дней. В среднем по отрасли до 8%.</span>'
+       +'<span class="s"><b>4</b>Все клиенты недовольны.</span>'
+       +'<span class="s"><b>5</b>Основная причина: заказы комплектуют по бумажным листам, ошибки в 9% позиций.</span>'
+       +'<span class="s"><b>6</b>Нужно срочно что-то менять.</span>',
+     q:'Какие предложения не дают руководителю проверяемой информации? Отметьте все.',
+     options:[
+      {t:'1. «организована плохо»', ok:true, why:'Оценочное суждение. Плохо по сравнению с чем?'},
+      {t:'2. «происходят часто»', ok:true, why:'Расплывчато. Сколько раз, на сколько дней?'},
+      {t:'3. «14 из 62 отгрузок, в среднем по отрасли 8%»', why:'Конкретика и бенчмарк, то, что нужно.'},
+      {t:'4. «Все клиенты недовольны»', ok:true, why:'Обобщение. Сколько клиентов, что они сказали?'},
+      {t:'5. «ошибки в 9% позиций»', why:'Есть причина и цифра.'},
+      {t:'6. «Нужно срочно что-то менять»', ok:true, why:'Нет предложения, нет срока, нет эффекта.'}
+     ]},
+    {id:'c2', type:'single', lab:'Цена вопроса',
+     q:'Автор предлагает сменить поставщика корпусов. Какой вариант показывает обе стороны и сравнивает с вариантом «ничего не менять»?',
+     options:[
+      {t:'Новый поставщик корпусов даст экономию около 11% на каждой партии. Он надёжный, работает с известными клиентами, и переход пройдёт без проблем. Предлагаю переходить как можно быстрее, пока предложение действует, и не искать других вариантов.', why:'Показана только выгода. Затраты и риски скрыты, а «без проблем» ничем не подтверждено.'},
+      {t:'Новый поставщик снизит затраты на 4,2 млн ₽ в год. Переход потребует 0,9 млн ₽ на тесты и 2 месяца параллельных поставок. Если ничего не менять, теряем экономию и сохраняем риск срывов.', ok:true, why:'Цена, выгода и вариант «ничего не менять» в одном абзаце.'},
+      {t:'Текущий поставщик подводит уже давно: срывы сроков, недовольные клиенты, рост рисков для всего бизнеса. Ситуация критическая, и менять его нужно срочно, пока не стало ещё хуже и пока клиенты окончательно не потеряли к нам доверие.', why:'Эмоции без цифр. Вызывает недоверие.'}
+     ]},
+    {id:'c3', type:'rewrite', lab:'Распрями предложение',
+     ctx:'<p>«Наблюдается постоянный дефицит драйверов на складе, приводящий к многочисленным задержкам отгрузок клиентам, который является следствием принятого решения об изменении порядка закупок.»</p>',
+     q:'Перепишите так, чтобы было понятно: кто, что сделал и к чему это привело. Допустим, решение принял отдел закупок.',
+     sample:'Отдел закупок перешёл на заказ драйверов раз в квартал. Запас закончился на 3 недели раньше срока. Из-за этого отгрузки клиентам задерживаются.',
+     checks:['Одно предложение выражает одну мысль','В каждом предложении виден субъект: кто что делает','Порядок «причина → событие → следствие»','Нет канцелярита («наблюдается», «является следствием»)']},
+    {id:'c4', type:'multi', lab:'Перевод на простой язык',
+     ctx:'<div class="hd">Письмо финансовому директору</div>'
+       +'<span class="s"><b>1</b>Применим драйверы с протоколом DALI-2 и диммированием D4i.</span>'
+       +'<span class="s"><b>2</b>Экономия составит 4,2 млн ₽ в год, окупаемость 14 месяцев.</span>'
+       +'<span class="s"><b>3</b>Светильники имеют степень защиты IP66.</span>'
+       +'<span class="s"><b>4</b>Коэффициент LLMF принят 0,8.</span>'
+       +'<span class="s"><b>5</b>Затраты вырастут на 6%.</span>',
+     q:'Какие фразы нужно перевести на язык руководителя, который не светотехник?',
+     options:[
+      {t:'1. DALI-2 и D4i', ok:true, why:'Слова-ярлыки. Скажите, что это даёт: «светильниками можно управлять по расписанию и датчикам».'},
+      {t:'2. «экономия 4,2 млн ₽, окупаемость 14 месяцев»', why:'Понятно любому руководителю.'},
+      {t:'3. IP66', ok:true, why:'Скажите: «защищены от пыли и мойки водой под напором».'},
+      {t:'4. LLMF 0,8', ok:true, why:'Скажите: «с запасом на старение: через 5 лет освещённость не упадёт ниже нормы».'},
+      {t:'5. «затраты вырастут на 6%»', why:'Понятно.'}
+     ]}
+  ],
+  fixed:['l3'],
+  rule:{title:'Как писать содержательно', points:[
+    'Показывайте цену вопроса и отдачу в цифрах, для решения и для варианта «ничего не менять». Не показывайте только одну сторону.',
+    'Конкретика вместо оценок («плохо»), обобщений («все», «всегда») и упущений (нет единиц, источника, срока).',
+    'Бенчмарк придаёт цифре смысл: «на 15% ниже среднего по отрасли».',
+    'Одно предложение, одна мысль. Одна тема, один абзац. «Кто — что делает — что получается».',
+    'Заменяйте жаргон описанием пользы. Если без термина нельзя, объясните его рядом.',
+    'Проверяйте сложные гипотезы. Решайте ту проблему, которая есть, а не ту, которую удобно решать.'
+  ]},
+  recap:'Какой из приёмов этого модуля вам нужнее всего?'
+});
+
+/* ---------- 5. Сокращение ---------- */
+MODS.push({
+  id:'m5', title:'Сокращение и выжимка', time:'8 мин', optional:false,
+  lead:'Чем короче письмо, тем выше шанс, что его прочитают. Ориентир: одна страница, 2–3 минуты чтения.',
+  intro:'<h3>Сокращение: коротко</h3>'
+    +'<p>Ориентир — одна страница, два-три минуты чтения. Проверка простая: мысленно соберите письмо в рюкзак и оставьте только то, без чего руководитель не примет решение. Всё остальное уходит в приложение или в ответ на вопрос.</p>'
+    +'<p style="margin-top:8px">Если большой документ сократить нельзя, начните его с выжимки: цель, главные выводы, просьба и срок. Остальное читают по необходимости.</p>',
+  tasks:[
+    {id:'k1', type:'cut', lab:'Вычеркни лишнее', limit:60,
+     ctx:'<p>Вы выбираете между двумя поставщиками драйверов. Вот черновик абзаца про поставщика «Линия Света». Цель: получить решение директора по закупкам. Оставьте только то, что нужно для выбора.</p>',
+     q:'Нажмите на предложения, которые нужно вычеркнуть. Уложитесь в 60 слов.',
+     items:[
+      {t:'Компания входит в десятку российских производителей драйверов по отраслевому рейтингу.', keep:false, why:'Рейтинг не проверен на вашей партии и выбор не меняет. Качество показывает тестовая партия.'},
+      {t:'Срок поставки драйверов 14 дней, у текущего поставщика 35 дней.', keep:true, why:'Критерий выбора с цифрой для сравнения.'},
+      {t:'Драйверы выпускают на заводе в Подольске, на линии работают 120 человек.', keep:false, why:'Масштаб производства интересен, но решение по нему не принимается.'},
+      {t:'Цена на 11% ниже текущей при партии от 5 000 штук.', keep:true, why:'Цена с условием и ориентиром для сравнения.'},
+      {t:'В линейке 12 вариантов мощности от 20 до 150 Вт.', keep:false, why:'Нам нужны конкретные модели. Линейка целиком не влияет на выбор.'},
+      {t:'Гарантия на драйверы 5 лет, у текущего 3 года.', keep:true, why:'Критерий выбора, влияет на будущие расходы.'},
+      {t:'Менеджер ответил на запрос за два часа и сам прислал образцы.', keep:false, why:'Приятный сервис, но выбор поставщика он не меняет.'},
+      {t:'На тестовой партии 200 штук брак составил 0,4%.', keep:true, why:'Проверенный факт о качестве.'},
+      {t:'Оплата: 30% предоплаты, остальное после поставки, у текущего поставщика 100% предоплата.', keep:true, why:'Условия оплаты влияют на деньги компании.'},
+      {t:'Два клиента, с которыми мы поговорили лично, подтвердили соблюдение сроков.', keep:true, why:'Независимое подтверждение срока, повышает доверие.'},
+      {t:'Прайс-лист и каталог можно скачать на сайте компании.', keep:false, why:'Ссылку можно дать в приложении. В основном тексте она не нужна.'}
+     ]},
+    {id:'k2', type:'multi', lab:'Когда нужна выжимка',
+     q:'Для каких документов нужна отдельная выжимка (executive summary)? Отметьте все.',
+     options:[
+      {t:'Письмо на 8 строк с просьбой', why:'Читается за минуту. Выжимка не нужна.'},
+      {t:'Коммерческая политика компании на 40 страниц', ok:true, why:'Сократить нельзя, а руководителю нужна суть на одной странице.'},
+      {t:'Запрос на согласование бюджета на 2 страницы', why:'Читается за 5 минут. Если написан хорошо, выжимка не нужна.'},
+      {t:'Регламент подготовки проектов на 25 страниц, который нужно подписать', ok:true, why:'Длинный документ, который нельзя сократить. Нужна выжимка на одну страницу.'}
+     ]},
+    {id:'k3', type:'rewrite', lab:'Напиши выжимку',
+     ctx:'<p>Итоги пилота на складе. Нужно решение директора по развитию. Факты:</p><ul><li>Пилот 3 месяца, склад 12 000 м², заменено 300 светильников.</li><li>Потребление на освещение снизилось на 52%.</li><li>Освещённость выросла со 180 до 300 лк (норма 200 лк).</li><li>Затраты на склад 5,8 млн ₽, экономия 1,9 млн ₽ в год, окупаемость 37 месяцев.</li><li>Есть ещё 4 склада такого же типа, затраты на них 23,2 млн ₽.</li><li>Решение нужно до 20 ноября: поставщик держит цену до 25 ноября.</li></ul>',
+     q:'Напишите выжимку из 3–4 предложений. Начните с просьбы.',
+     sample:'Прошу согласовать масштабирование светодиодного освещения на 4 склада, бюджет 23,2 млн ₽, решение до 20 ноября. Пилот на складе 12 000 м² показал снижение потребления на 52% и экономию 1,9 млн ₽ в год при окупаемости 37 месяцев. Освещённость выросла со 180 до 300 лк при норме 200. Цена у поставщика действует до 25 ноября.',
+     checks:['Просьба и срок в первом предложении','Есть цена вопроса: бюджет и экономия','Есть результат пилота в цифрах и с нормой для сравнения','Понятно без чтения основного документа','Не больше 4 предложений']}
+  ],
+  rule:{title:'Как сокращать', points:[
+    'Сначала цель и главные мысли. Всё, что им не помогает, вычёркивайте.',
+    'Из подробностей оставьте только те, без которых мысль не доказать.',
+    'Если вариантов много, показывайте только те, которые проходят по критериям. Критерии берите только значимые.',
+    'Форма должна быть экономной: таблица сравнения на 6 строк часто лучше трёх страниц текста.',
+    'Если длинный документ нельзя сократить, добавляйте выжимку до одной страницы. Её можно разместить в теле письма.'
+  ]},
+  recap:'Что вы вычёркиваете из своих писем первым делом?'
+});
+
+/* ---------- 6. Финальное задание ---------- */
+MODS.push({
+  id:'m6', title:'Финальное письмо', time:'15 мин', optional:false, final:true,
+  lead:'Вы пишете реальное письмо по сценарию. Проверка делается через промпт: после заполнения вы получите готовый текст, который вставите в ИИ-чат.',
+  scenarios:[
+    {id:'f1', title:'Запрос ресурса', sub:'Демо-комплекты образцов', to:'коммерческому директору', template:'Предложение / запрос',
+     situation:'Вы руководитель отдела продаж по региону. Менеджерам нужны демонстрационные комплекты образцов светильников, чтобы привозить их на встречи. Сейчас образцы отправляют курьером. Вы пишете коммерческому директору и просите бюджет.',
+     facts:['За квартал менеджеры провели 40 встреч с новыми клиентами.','На 14 встречах клиенты просили образцы. Курьером они доходили в среднем за 6 рабочих дней.','Из этих 14 клиентов 4 за неделю выбрали конкурента, который привёз образцы на встречу.','Средний чек новой сделки 3,5 млн ₽.','Демо-комплект из 12 моделей стоит 280 тыс. ₽. Нужно 3 комплекта, по числу региональных менеджеров: 840 тыс. ₽.','Закупка комплектов занимает 3 недели. Согласовать нужно до 15 ноября: в декабре выставка, на которую менеджеры возьмут комплекты.']},
+    {id:'f2', title:'Отчёт по поручению', sub:'Внедрение шаблона КП', to:'директору по продажам', template:'План — факт',
+     situation:'Директор по продажам поручил внедрить единый шаблон коммерческого предложения за квартал. Вы отвечаете за проект и пишете отчёт.',
+     facts:['Запланировано 5 задач, 4 выполнены.','Не выполнена интеграция с 1С: ждём API от ИТ, новая дата 18 декабря (по плану была 15 ноября).','Израсходовано 62% бюджета, 0,93 млн ₽ из 1,5 млн ₽.','На первых 40 КП время подготовки сократилось с 3 дней до 1,5 дня.','Для завершения интеграции нужна помощь директора по ИТ: назначить разработчика.']},
+    {id:'f3', title:'Рекомендация с выбором', sub:'Поставщик светильников для тендера', to:'директору по закупкам', template:'Выводы — рекомендации',
+     situation:'Для тендера нужно выбрать поставщика светильников. Вариантов два. Вы проанализировали их и пишете директору по закупкам.',
+     facts:['Условия тендера: поставка за 4 недели, штраф 0,1% от суммы контракта за каждый день просрочки. Контракт 18 млн ₽.','Поставщик А: цена ниже на 8% (на 1,4 млн ₽), срок 6 недель, гарантия 3 года.','Поставщик Б: цена выше на 8%, срок 3 недели, гарантия 5 лет.','Работали с обоими. У А было 2 срыва из 7 поставок, у Б срывов не было.','Решение нужно до 12 ноября: заявка подаётся 14 ноября.']}
+  ],
+  rule:{title:'Что проверяет ИИ', points:[
+    'Цель: понятно желаемое действие руководителя и оно достижимо.',
+    'Главное в начале: просьба или вывод в первых строках, тема отражает суть.',
+    'Структура: подходит шаблон, мало главных мыслей, они не пересекаются.',
+    'Цена и выгода: затраты, отдача, вариант «ничего не менять», нет манипуляций.',
+    'Конкретика: цифры, единицы, ориентиры, нет оценок и обобщений.',
+    'Простота: короткие предложения, понятный язык.',
+    'Краткость: нет лишнего, не больше страницы.',
+    'Срок и следующий шаг: до какой даты нужен ответ.'
+  ]},
+  recap:'Что в вашем письме получилось лучше всего и что вы улучшите в следующем?'
+});
+
+/* ---------- Шпаргалка ---------- */
+var CHEAT = {
+  algo:[
+    'Соберите факты и поймите, кому пишете.',
+    'Запишите цель: какого действия от руководителя вы хотите.',
+    'Выпишите мысли (порядок пока не важен).',
+    'Постройте структуру: шаблон или вопросы руководителя.',
+    'Сгруппируйте мысли, оставьте главное, найдите пробелы.',
+    'Допишите недостающие факты, уточните цель.',
+    'Напишите связный текст, добавьте таблицу при необходимости.',
+    'Если письмо длинное, добавьте выжимку.',
+    'Проверьте по критериям, сократите.',
+    'Дайте тексту отлежаться и перечитайте.'
+  ],
+  templates:[
+    ['Предложение / запрос','Ситуация → Решение → Цена и выгода → План и ресурсы (если нужно)'],
+    ['План — факт','Резюме → Таблица: что сделано, что нет, почему, когда, сколько потрачено'],
+    ['Выводы — рекомендации','Цель → Выводы → Рекомендации → Данные → Метод']
+  ],
+  checks:[
+    'Цель понятна из первых строк',
+    'Главное в начале, тема несёт суть',
+    'Структура без пересечений, 2–4 главные мысли',
+    'Есть цена, выгода и вариант «ничего не менять»',
+    'Цифры, единицы, ориентиры. Нет оценок и обобщений',
+    'Короткие предложения, простой язык',
+    'Нет лишнего, не больше страницы',
+    'Указан срок ответа и следующий шаг'
+  ],
+  stages:['Анализ','Выводы','Подход','План','Действия']
+};
+
+var MEMO=[
+ ['1. Цель',[
+  'Запишите, какого действия вы ждёте от руководителя и к какому сроку. Тема письма называет это действие.',
+  'Этапы вопроса: Анализ → Выводы → Подход → План → Действия. Делайте «плюс шаг»: после анализа присылайте выводы, после выводов предлагайте подход.']],
+ ['2. Структура',[
+  'Главное в начало: просьба, срок, главный факт в цифрах.',
+  'Шаблоны. Предложение / запрос: ситуация, решение, цена и выгода, план. План — факт: резюме, таблица «сделано, не сделано, почему, когда, сколько потрачено». Выводы — рекомендации: цель, выводы, рекомендации, данные, метод.',
+  'Главных мыслей 2–4, без пересечений. Нет подходящего шаблона: ответьте на вопросы руководителя по порядку.']],
+ ['3. Содержание',[
+  'Назовите цену, выгоду и вариант «ничего не менять», с ориентиром для сравнения.',
+  'Цифры и единицы вместо оценок («плохо»), обобщений («все», «всегда») и упущений («снизили затраты» без «на сколько»).',
+  'Короткие предложения, простые слова.']],
+ ['4. Сокращение',[
+  'Ориентир: одна страница, 2–3 минуты чтения. Оставьте то, без чего руководитель не решит.',
+  'Детали уходят в приложение. Если документ длинный и его не сократить, начните с выжимки.']]
+];
+var MEMO_AI='Помогай мне писать письма руководству по этой памятке. Сначала спроси, какого действия я хочу от адресата и к какому сроку. Затем предложи структуру и шаблон, а мой черновик проверь по чек-листу. Не придумывай цифры: используй только те, что я дам.';
+
+/* ---------- SCORM 1.2 / 2004: адаптер ---------- */
+var SC=(function(){
+  var api=null,ver='',ok=false,t0=Date.now(),icount=0,closed=false,lastErr='',doneSent=false;
+  function find(w,name){var n=0;while(w&&n<12){try{if(w[name])return w[name];}catch(e){}if(w===w.parent)break;w=w.parent;n++;}return null;}
+  function look(name){var a=find(window,name);if(!a&&window.opener){try{a=find(window.opener,name);}catch(e){}}return a;}
+  api=look('API');if(api){ver='1.2';}
+  else{api=look('API_1484_11');if(api)ver='2004';}
+  if(api){try{ok=String(ver==='1.2'?api.LMSInitialize(''):api.Initialize(''))==='true';}catch(e){ok=false;}}
+  function call(fn12,fn04,a,b){try{return ver==='1.2'?api[fn12](a,b):api[fn04](a,b);}catch(e){lastErr='exception';return '';}}
+  function err(){try{var c=String(ver==='1.2'?api.LMSGetLastError():api.GetLastError());if(c&&c!=='0')lastErr=c;return c;}catch(e){return '';}}
+  var K12={status:'cmi.core.lesson_status',loc:'cmi.core.lesson_location',sd:'cmi.suspend_data',raw:'cmi.core.score.raw',min:'cmi.core.score.min',max:'cmi.core.score.max',name:'cmi.core.student_name',sid:'cmi.core.student_id',time:'cmi.core.session_time',exit:'cmi.core.exit',resp:'student_response'};
+  var K04={status:'cmi.completion_status',loc:'cmi.location',sd:'cmi.suspend_data',raw:'cmi.score.raw',min:'cmi.score.min',max:'cmi.score.max',name:'cmi.learner_name',sid:'cmi.learner_id',time:'cmi.session_time',exit:'cmi.exit',resp:'learner_response'};
+  function K(k){return ver==='1.2'?K12[k]:K04[k];}
+  function get(k){if(!ok)return '';var v=String(call('LMSGetValue','GetValue',K(k))||'');return v;}
+  function setRaw(key,v){if(!ok)return;call('LMSSetValue','SetValue',key,String(v));err();}
+  function set(k,v){setRaw(K(k),v);}
+  function commit(){if(!ok)return;call('LMSCommit','Commit','');err();}
+  function pad(n,l){n=String(n);while(n.length<l)n='0'+n;return n;}
+  function stime(){var s=Math.round((Date.now()-t0)/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;
+    return ver==='1.2'?pad(h,4)+':'+pad(m,2)+':'+pad(x,2):'PT'+h+'H'+m+'M'+x+'S';}
+  var S={ok:ok,ver:ver,get:get,commit:commit,
+    status:function(){return get('status');},
+    err:function(){return lastErr;},
+    start:function(){if(!ok)return;var st=get('status');
+      if(!st||st==='not attempted'||st==='unknown'||st==='browsed')set('status','incomplete');
+      var c=parseInt(call('LMSGetValue','GetValue','cmi.interactions._count'),10);icount=isNaN(c)?0:c;
+      if(ver==='2004')setRaw('cmi.exit','suspend');},
+    setSD:function(v){set('sd',v);},getSD:function(){return get('sd');},setLoc:function(v){set('loc',v);},
+    name:function(){return get('name');},sid:function(){return get('sid');},
+    complete:function(){if(!ok)return;var st=get('status');if(st!=='completed'&&st!=='passed'){set('status','completed');if(ver==='2004')setRaw('cmi.success_status','unknown');}doneSent=true;},
+    score:function(raw){if(!ok)return;set('min','0');set('max','100');set('raw',raw);if(ver==='2004')setRaw('cmi.score.scaled',(raw/100).toFixed(2));},
+    interaction:function(id,resp,result){if(!ok)return;var p='cmi.interactions.'+icount+'.';
+      setRaw(p+'id',String(id).replace(/[^A-Za-z0-9_]/g,'_').slice(0,200));setRaw(p+'type','performance');
+      setRaw(p+K('resp'),String(resp||'').replace(/\s+/g,' ').slice(0,240));
+      setRaw(p+'result',ver==='2004'?(result==='wrong'?'incorrect':result):result);icount++;},
+    finish:function(done){if(!ok||closed)return;closed=true;set('time',stime());
+      if(ver==='1.2')set('exit',done?'':'suspend');else setRaw('cmi.exit',done?'normal':'suspend');
+      commit();call('LMSFinish','Terminate','');},
+    isDone:function(){return doneSent;},
+    label:function(){
+      if(!ok)return 'Связь с LMS не найдена: прогресс сохраняется только в этом браузере и в статистику LMS не попадёт.';
+      return 'Связь с LMS: SCORM '+ver+', статус «'+(get('status')||'—')+'»'+(lastErr?', ошибка LMS '+lastErr:'')+'.';}
+  };
+  return S;
+})();
+
+(function(){
+var KEY='bezvody-lms-v1';
+var ST={done:{},ans:{},notes:{},fin:{},first:{},tries:{},cur:BUILD==='sco2'?'m6':'m0'};
+if(BUILD==='sco1')MODS=MODS.filter(function(m){return !m.final&&!m.optional;});
+else MODS=MODS.filter(function(m){return m.final;});
+function bits(arr,n){var s='',i;for(i=0;i<n;i++)s+=(arr&&arr[i])?'1':'0';return s;}
+function unbits(s){var r=[],i;s=s||'';for(i=0;i<s.length;i++)r.push(s.charAt(i)==='1');return r;}
+function r2(x){return Math.round(x*100)/100;}
+function encodeState(lim){
+  var o={c:ST.cur,d:{},f:{},a:{},n:{},t:ST.tries||{}},tl=lim===1?40:100,nl=lim===2?60:150;
+  Object.keys(ST.done).forEach(function(k){if(k==='final')o.fd=1;else o.d[k]=r2(ST.done[k]);});
+  Object.keys(ST.first||{}).forEach(function(k){o.f[k]=r2(ST.first[k]);});
+  Object.keys(TASKS).forEach(function(id){
+    var t=TASKS[id],a=ST.ans[id],e,i;if(!a)return;
+    if(t.type==='single'){if(a.sel===undefined)return;e=[a.sel];}
+    else if(t.type==='multi'){e=[bits(a.sel,t.options.length),a.checked?1:0];}
+    else if(t.type==='group'){var p='';for(i=0;i<t.items.length;i++)p+=(a.pick&&a.pick[i]!==undefined&&a.pick[i]!==null)?a.pick[i]:'-';e=[p,a.checked?1:0];}
+    else if(t.type==='order'){if(!a.order)return;e=[a.order.map(function(x){return x.toString(36);}).join(''),a.checked?1:0];}
+    else if(t.type==='cut'){e=[bits(a.off,t.items.length),a.checked?1:0];}
+    else if(t.type==='rewrite'){e=[(a.text||'').slice(0,tl),a.shown?1:0,bits(a.checks,t.checks.length)];}
+    else return;
+    o.a[id]=e;});
+  Object.keys(ST.notes).forEach(function(k){if(ST.notes[k])o.n[k]=ST.notes[k].slice(0,nl);});
+  if(BUILD==='sco2'){var f=ST.fin,g={};['sc','goal','i1','i2','i3','tpl','subj','main','name','email','sent'].forEach(function(k){if(f[k])g[k]=f[k];});if(f.body)g.body=f.body.slice(0,1800);if(f.score!==undefined&&f.score!=='')g.score=f.score;if(f.prompt)g.pf=1;o.fin=g;}
+  var s=JSON.stringify(o);
+  if(s.length>3900&&!lim)return encodeState(1);
+  if(s.length>3900&&lim===1)return encodeState(2);
+  return s;
+}
+function decodeState(o){
+  ST.cur=o.c||ST.cur;ST.done=o.d||{};if(o.fd)ST.done.final=1;ST.first=o.f||{};ST.tries=o.t||{};ST.notes=o.n||{};ST.fin=o.fin||{};ST.ans={};
+  Object.keys(o.a||{}).forEach(function(id){
+    var t=TASKS[id],e=o.a[id],a={};if(!t)return;
+    if(t.type==='single'){a.sel=e[0];}
+    else if(t.type==='multi'){a.sel=unbits(e[0]);a.checked=!!e[1];}
+    else if(t.type==='group'){a.pick=e[0].split('').map(function(c){return c==='-'?undefined:+c;});a.checked=!!e[1];}
+    else if(t.type==='order'){a.order=e[0].split('').map(function(c){return parseInt(c,36);});a.checked=!!e[1];}
+    else if(t.type==='cut'){a.off=unbits(e[0]);a.checked=!!e[1];}
+    else if(t.type==='rewrite'){a.text=e[0];a.shown=!!e[1];a.checks=unbits(e[2]);}
+    ST.ans[id]=a;});
+}
+function load(){
+  if(SC.ok){var raw=SC.getSD();if(raw){try{decodeState(JSON.parse(raw));}catch(e){}}return;}
+  try{var s=localStorage.getItem(KEY);if(s){decodeState(JSON.parse(s));}}catch(e){}
+}
+function restorePrompt(){if(ST.fin&&ST.fin.pf){try{ST.fin.prompt=buildPrompt();}catch(e){}}}
+var syncT=null;
+function updFirst(){Object.keys(TASKS).forEach(function(id){var t=TASKS[id];if(t.type==='rewrite')return;if(ST.done[id]!==undefined&&ST.first[id]===undefined)ST.first[id]=ST.done[id];});}
+function lmsScore(){var ids=Object.keys(TASKS).filter(function(id){return TASKS[id].type!=='rewrite';}),n=0;ids.forEach(function(id){n+=ST.first[id]||0;});return ids.length?Math.round(n/ids.length*100):0;}
+function allDone(){return MODS.every(modDone);}
+function sync(){
+  syncT=null;updFirst();var s=encodeState();
+  if(!SC.ok){try{localStorage.setItem(KEY,s);}catch(e){}return;}
+  SC.setSD(s);SC.setLoc(ST.cur);
+  if(allDone()){if(BUILD==='sco1')SC.score(lmsScore());SC.complete();}
+  SC.commit();var ll=$('lmslbl');if(ll)ll.textContent=SC.label();
+}
+function save(){if(syncT)clearTimeout(syncT);if(allDone()&&!SC.isDone()){sync();return;}syncT=setTimeout(sync,BUILD==='sco2'?800:400);}
+function flush(){if(syncT){clearTimeout(syncT);}sync();SC.finish(allDone());}
+window.addEventListener('pagehide',flush);window.addEventListener('beforeunload',flush);window.addEventListener('unload',flush);
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function $(id){return document.getElementById(id);}
+function wc(s){return (s||'').trim().split(/\s+/).filter(Boolean).length;}
+var TASKS={};
+MODS.forEach(function(m){(m.tasks||[]).forEach(function(t){TASKS[t.id]=t;t.mod=m.id;});});
+var REQ=MODS;
+var ORDER=MODS.map(function(m){return m.id;});
+function isPage(id){return !!modById(id);}
+function tries(id){ST.tries=ST.tries||{};return ST.tries[id]||0;}
+function modById(id){for(var i=0;i<MODS.length;i++){if(MODS[i].id===id)return MODS[i];}return null;}
+function A(id){return ST.ans[id]||(ST.ans[id]={});}
+function modDone(m){if(m.final)return !!ST.done.final;return m.tasks.every(function(t){return ST.done[t.id]!==undefined;});}
+
+/* ---------- отрисовка заданий ---------- */
+function pill(t){
+  var s=ST.done[t.id];if(s===undefined)return '';
+  if(t.type==='rewrite'){return '<span class="st '+(s>=0.75?'ok':'mid')+'">самооценка '+Math.round(s*100)+'%</span>';}
+  var c=s>=0.99?'ok':(s>=0.5?'mid':'bad');
+  var txt=s>=0.99?'верно':(s>=0.5?'частично':'есть над чем поработать');
+  return '<span class="st '+c+'">'+txt+'</span>';
+}
+function ctxHtml(t){
+  if(t.ctx)return '<div class="ctx">'+t.ctx+'</div>';
+  if(t.ctxFrom){return '<details><summary style="cursor:pointer;font-family:var(--f-mono);font-size:13px;color:var(--accent-text);margin-bottom:8px">Показать письмо ещё раз</summary><div class="ctx">'+TASKS[t.ctxFrom].ctx+'</div></details>';}
+  return '';
+}
+function optOrd(t){
+  if(t._ord)return t._ord;
+  var n=t.options.length,idx=[],i;for(i=0;i<n;i++)idx.push(i);
+  if(!t.noShuffle){var seed=7+tries(t.id)*131;for(i=0;i<t.id.length;i++)seed+=t.id.charCodeAt(i)*(i+5);
+  for(i=n-1;i>0;i--){seed=(seed*1103515245+12345)&0x7fffffff;var j=seed%(i+1);var x=idx[i];idx[i]=idx[j];idx[j]=x;}}
+  t._ord=idx;return idx;
+}
+function rSingle(t,a){
+  var chk=a.sel!==undefined;
+  return '<div class="opts">'+optOrd(t).map(function(i){var o=t.options[i];
+    var cls='opt single';if(chk){if(o.ok)cls+=' right';else if(i===a.sel)cls+=' wrong';}
+    var mark=chk?(o.ok?'✓':(i===a.sel?'✕':'')):'';
+    return '<button class="'+cls+'" data-a="single" data-t="'+t.id+'" data-i="'+i+'"'+(chk?' disabled':'')+'><span class="bx">'+mark+'</span><span class="tx">'+esc(o.t)+(chk?'<span class="why">'+esc(o.why||'')+'</span>':'')+'</span></button>';
+  }).join('')+'</div>';
+}
+function rMulti(t,a){
+  var chk=!!a.checked,sel=a.sel||[],any=sel.some(function(x){return x;});
+  var h='<div class="opts">'+t.options.map(function(o,i){
+    var cls='opt',mark='';
+    if(!chk){if(sel[i]){cls+=' sel';mark='✓';}}
+    else{if(sel[i]&&o.ok){cls+=' right';mark='✓';}else if(sel[i]&&!o.ok){cls+=' wrong';mark='✕';}else if(!sel[i]&&o.ok){cls+=' miss';mark='!';}}
+    return '<button class="'+cls+'" data-a="multi" data-t="'+t.id+'" data-i="'+i+'"'+(chk?' disabled':'')+'><span class="bx">'+mark+'</span><span class="tx">'+esc(o.t)+(chk?'<span class="why">'+esc(o.why||'')+'</span>':'')+'</span></button>';
+  }).join('')+'</div>';
+  if(!chk)h+='<div class="actions"><button class="btn primary" data-a="check" data-t="'+t.id+'"'+(any?'':' disabled')+'>Проверить</button></div>';
+  else h+='<p class="lab2">Пунктирная рамка: нужно было отметить.</p>';
+  return h;
+}
+function initOrder(t,a){
+  if(a.order)return;
+  var n=t.items.length,idx=[],i;for(i=0;i<n;i++)idx.push(i);
+  var seed=tries(t.id)*97;for(i=0;i<t.id.length;i++)seed+=t.id.charCodeAt(i)*(i+3);
+  for(i=n-1;i>0;i--){seed=(seed*1103515245+12345)&0x7fffffff;var j=seed%(i+1);var tmp=idx[i];idx[i]=idx[j];idx[j]=tmp;}
+  if(idx.every(function(v,k){return v===k;}))idx.push(idx.shift());
+  a.order=idx;
+}
+function rOrder(t,a){
+  initOrder(t,a);var chk=!!a.checked,n=a.order.length;
+  var h='<div class="ord">'+a.order.map(function(ix,pos){
+    var cls='row';if(chk)cls+=(ix===pos?' right':' wrong');
+    var it=t.items[ix];
+    return '<div class="'+cls+'"><span class="no">'+(pos+1)+'</span><span class="tx">'+esc(it.t)+(chk?'<span class="why" style="display:block;font-size:14px;color:var(--muted);margin-top:4px">'+(ix===pos?'Верно. ':'Здесь должен быть другой блок. Этот блок: ')+esc(it.why||'')+'</span>':'')+'</span>'
+      +(chk?'':'<span class="mv"><button data-a="mv" data-t="'+t.id+'" data-i="'+pos+'" data-d="-1"'+(pos===0?' disabled':'')+' aria-label="Выше">▲</button><button data-a="mv" data-t="'+t.id+'" data-i="'+pos+'" data-d="1"'+(pos===n-1?' disabled':'')+' aria-label="Ниже">▼</button></span>')+'</div>';
+  }).join('')+'</div>';
+  if(!chk)h+='<div class="actions"><button class="btn primary" data-a="check" data-t="'+t.id+'">Проверить порядок</button></div>';
+  return h;
+}
+function rGroup(t,a){
+  var chk=!!a.checked,pick=a.pick||[],all=t.items.every(function(x,i){return pick[i]!==undefined&&pick[i]!==null;});
+  var h='<div class="opts">'+t.items.map(function(it,i){
+    var cls='grp-row';if(chk)cls+=(pick[i]===it.cat?' right':' wrong');
+    return '<div class="'+cls+'"><div>'+esc(it.t)+'</div><div class="cats">'+t.cats.map(function(c,ci){
+      return '<button class="cat'+(pick[i]===ci?' on':'')+'" data-a="cat" data-t="'+t.id+'" data-i="'+i+'" data-c="'+ci+'"'+(chk?' disabled':'')+'>'+esc(c)+'</button>';
+    }).join('')+'</div>'+(chk?'<div class="why" style="font-size:14px;color:var(--muted)">'+(pick[i]===it.cat?'Верно. ':'Правильно: «'+esc(t.cats[it.cat])+'». ')+esc(it.why||'')+'</div>':'')+'</div>';
+  }).join('')+'</div>';
+  if(!chk)h+='<div class="actions"><button class="btn primary" data-a="check" data-t="'+t.id+'"'+(all?'':' disabled')+'>Проверить</button></div>';
+  return h;
+}
+function keptWords(t,a){var off=a.off||[],n=0;t.items.forEach(function(it,i){if(!off[i])n+=wc(it.t);});return n;}
+function rCut(t,a){
+  var chk=!!a.checked,off=a.off||[],n=keptWords(t,a),over=n>t.limit;
+  var h='<div class="cut">'+t.items.map(function(it,i){
+    var cls='sn'+(off[i]?' off':'');if(chk)cls+=((!!off[i])===(!it.keep)?' right':' wrong');
+    return '<button class="'+cls+'" data-a="cut" data-t="'+t.id+'" data-i="'+i+'"'+(chk?' disabled':'')+'><span class="tx">'+esc(it.t)+(chk?'<span class="why" style="display:block;font-size:14px;color:var(--muted);margin-top:3px">'+((!!off[i])===(!it.keep)?'Верно. ':(it.keep?'Это нужно оставить. ':'Это лишнее. '))+esc(it.why||'')+'</span>':'')+'</span><span class="tag">'+wc(it.t)+' сл.</span></button>';
+  }).join('')+'</div>';
+  h+='<div class="actions"><span class="counter'+(over?' over':'')+'">Осталось слов: '+n+' из '+t.limit+'</span>'+(chk?'':'<button class="btn primary" data-a="check" data-t="'+t.id+'">Проверить</button>')+'</div>';
+  return h;
+}
+function minW(t){return t.min||8;}
+function rRewrite(t,a){
+  var shown=!!a.shown,txt=a.text||'',h='<textarea id="ta-'+t.id+'" data-a="text" data-t="'+t.id+'" placeholder="Напишите ваш вариант здесь" aria-label="Ваш вариант"'+(shown?' readonly':'')+'>'+esc(txt)+'</textarea>';
+  if(!shown){
+    h+='<div class="actions"><button class="btn primary" data-a="show" data-t="'+t.id+'" '+(wc(txt)>=minW(t)?'':'disabled')+'>Показать образец и критерии</button><span class="counter">'+wc(txt)+' сл. Нужно от '+minW(t)+', чтобы открыть образец</span></div>';
+  }else{
+    var ch=a.checks||[];
+    h+='<div class="sample"><div class="lab">Образец (не единственный верный вариант)</div>'+esc(t.sample).replace(/\n/g,'<br>')+'</div>';
+    h+='<div><div class="lab2" style="margin-bottom:6px">Отметьте, что у вас получилось</div><div class="chk">'+t.checks.map(function(c,i){
+      return '<label><input type="checkbox" data-a="rchk" data-t="'+t.id+'" data-i="'+i+'"'+(ch[i]?' checked':'')+'><span>'+esc(c)+'</span></label>';
+    }).join('')+'</div></div>';
+  }
+  return h;
+}
+function isChecked(t,a){
+  if(t.type==='single')return a.sel!==undefined;
+  if(t.type==='rewrite')return !!a.shown;
+  return !!a.checked;
+}
+function renderTask(t){
+  var a=A(t.id),body='';
+  if(t.type==='single')body=rSingle(t,a);
+  else if(t.type==='multi')body=rMulti(t,a);
+  else if(t.type==='order')body=rOrder(t,a);
+  else if(t.type==='group')body=rGroup(t,a);
+  else if(t.type==='cut')body=rCut(t,a);
+  else if(t.type==='rewrite')body=rRewrite(t,a);
+  return '<section class="card task" id="task-'+t.id+'"><div class="head"><span class="lab">'+esc(t.lab)+'</span>'+pill(t)+'</div>'+(t.pre?'<div class="fb">'+t.pre+'</div>':'')+ctxHtml(t)+'<div class="tq">'+esc(t.q)+'</div>'+body+(!t.diag&&isChecked(t,a)?'<div class="actions"><button class="btn sm" data-a="retry" data-t="'+t.id+'">Пройти заново</button></div>':'')+'</section>';
+}
+function redrawTask(id){
+  var t=TASKS[id],el=$('task-'+id);
+  if(el){var tmp=document.createElement('div');tmp.innerHTML=renderTask(t);el.replaceWith(tmp.firstChild);}
+  logI(id);save();afterChange();
+}
+function logI(id){
+  var t=TASKS[id],a=A(id);if(!t||a._logged||!isChecked(t,a))return;a._logged=true;
+  var resp='',res='neutral',s=ST.done[id],i;
+  if(t.type==='single')resp=(t.options[a.sel]||{}).t;
+  else if(t.type==='multi'){resp=t.options.map(function(o,k){return a.sel&&a.sel[k]?(k+1):'';}).filter(String).join(',');}
+  else if(t.type==='group')resp=(a.pick||[]).join(',');
+  else if(t.type==='order')resp=(a.order||[]).map(function(x){return x+1;}).join(',');
+  else if(t.type==='cut')resp=(a.off||[]).map(function(v,k){return v?(k+1):'';}).filter(String).join(',');
+  else if(t.type==='rewrite')resp=a.text||'';
+  if(t.type!=='rewrite')res=s>=0.99?'correct':'wrong';
+  SC.interaction(t.mod+'_'+id,resp,res);
+}
+
+/* ---------- проверка ---------- */
+function checkTask(id){
+  var t=TASKS[id],a=A(id),s=0,i;
+  if(t.type==='multi'){
+    var sel=a.sel||[],ok=0,hit=0,bad=0;
+    t.options.forEach(function(o,k){if(o.ok)ok++;if(sel[k]&&o.ok)hit++;if(sel[k]&&!o.ok)bad++;});
+    s=Math.max(0,(hit-bad)/ok);
+  }else if(t.type==='order'){
+    var c=0;a.order.forEach(function(ix,pos){if(ix===pos)c++;});s=c/a.order.length;
+  }else if(t.type==='group'){
+    var g=0;t.items.forEach(function(it,k){if(a.pick[k]===it.cat)g++;});s=g/t.items.length;
+  }else if(t.type==='cut'){
+    var r=0,off=a.off||[];t.items.forEach(function(it,k){if((!!off[k])===(!it.keep))r++;});s=r/t.items.length;
+    if(keptWords(t,a)>t.limit)s=Math.min(s,0.8);
+  }
+  a.checked=true;ST.done[id]=s;redrawTask(id);
+}
+
+/* ---------- блок после заданий ---------- */
+var AX=[
+ ['Цель',['d1','d5'],'Понимаете ли вы, чего письмо должно добиться от руководителя','m2'],
+ ['Структура',['d2','d6'],'Выносите ли вы главную мысль и просьбу в начало','m3'],
+ ['Конкретика',['d3'],'Замечаете ли вы фразы без цифр и фактов','m4'],
+ ['Краткость',['d4'],'Умеете ли вы находить лишнее','m5']];
+function axScore(x){var n=0;x[1].forEach(function(id){n+=ST.done[id]||0;});return n/x[1].length;}
+function weakest(){var w=AX[0];AX.forEach(function(x){if(axScore(x)<axScore(w))w=x;});return w;}
+function profileHtml(){
+  function say(v,mod){
+    if(v>=0.99)return 'Уверенно. Здесь вы почти не ошиблись.';
+    if(v>=0.5)return 'Частично. Основное замечено, детали ускользнули.';
+    return 'Зона роста. Разберём в модуле «'+modById(mod).title+'».';
+  }
+  var h='<section class="card prof"><h3 style="font-size:16px">Результат диагностики</h3>'
+   +'<p style="color:var(--muted);font-size:15px;max-width:68ch">Процент показывает долю верных ответов по вопросам каждой оси. Это не оценка вас как автора, а ориентир, с чего начать.</p>';
+  AX.forEach(function(x){
+    var s=axScore(x),v=Math.round(s*100);
+    h+='<div><div class="pr"><span><b>'+x[0]+'</b></span><div class="tr"><i style="width:'+v+'%"></i></div><span class="v">'+v+'%</span></div>'
+      +'<p style="font-size:14px;color:var(--muted);margin-top:3px">'+x[2]+'. '+say(s,x[3])+'</p></div>';
+  });
+  var w=weakest();
+  h+='<div class="fb"><p><b>С чего начать.</b> Самый низкий результат по оси «'+w[0]+'». Рекомендуем начать с модуля «'+modById(w[3]).title+'», но можно пройти все модули по порядку.</p></div></section>';
+  return h;
+}
+function fixedHtml(m){
+  if(!m.fixed)return '';
+  return m.fixed.map(function(id){
+    var f=FIX[id];
+    return '<section class="card" style="border-color:var(--ok)"><div class="lab2">Правильная версия</div><h3 style="font-size:16px;margin:6px 0 12px">'+esc(f.title)+'</h3>'
+      +'<div class="ctx"><div class="hd">Тема: '+esc(f.subj)+'</div>'+f.body.map(function(p){return '<p>'+p+'</p>';}).join('')+'</div>'
+      +'<div class="lab2" style="margin-top:14px">Что изменилось</div><ul class="facts">'+f.changes.map(function(c){return '<li>'+esc(c)+'</li>';}).join('')+'</ul>'
+      +'<p class="lab2" style="margin-top:10px">Цифры в образце условные. В вашем письме здесь будут реальные данные.</p></section>';
+  }).join('');
+}
+function finishHtml(){
+  var left=REQ.filter(function(m){return !modDone(m);});
+  var h='<div class="modhead"><h2>Итог</h2><p class="lead">Что вы прошли, что получили и что сделать на этой неделе.</p></div>';
+  if(left.length){
+    return h+'<div class="locked">Итог откроется после основных модулей. Осталось: '+left.map(function(m){return '«'+esc(m.title)+'»';}).join(', ')+'.</div>';
+  }
+  h+=profileHtml();
+  var fs=ST.fin&&ST.fin.score!==undefined&&ST.fin.score!==''?ST.fin.score:null;
+  if(fs!==null)h+='<section class="card"><div class="lab2">Финальное письмо</div><p style="margin-top:6px">Ваша оценка по критериям ИИ: <b>'+esc(fs)+' из 16</b>.'+(ST.fin.main?' Главная правка: '+esc(ST.fin.main):'')+'</p></section>';
+  var notes=MODS.filter(function(m){return ST.notes[m.id]&&ST.notes[m.id].trim();});
+  h+='<section class="card"><h3 style="font-size:16px;margin-bottom:8px">Ваши выжимки</h3>'+(notes.length?'<ul class="facts">'+notes.map(function(m){return '<li><b>'+esc(m.title)+'.</b> '+esc(ST.notes[m.id])+'</li>';}).join('')+'</ul>':'<p style="color:var(--muted)">Вы пока не записали выжимки. Их можно вернуть в любой модуль и дополнить.</p>')+'</section>';
+  h+='<section class="card rule"><h3>На этой неделе</h3><ul><li>Выберите одно реальное письмо руководителю, которое вам нужно отправить.</li><li>Прогоните его по шпаргалке: цель, главное в начале, цифры, срок ответа.</li><li>Отправьте и посмотрите, сколько уточняющих вопросов пришло в ответ.</li></ul></section>';
+  h+='<div class="actions"><button class="btn primary" data-a="go" data-m="cheat">Открыть шпаргалку</button>'+(MODS.some(function(m){return m.optional;})?'<button class="btn" data-a="go" data-m="'+MODS.filter(function(m){return m.optional;})[0].id+'">Дополнительные модули</button>':'')+'</div>';
+  return h;
+}
+
+/* ---------- памятка ---------- */
+function memoText(){
+  var t='ПИСЬМО РУКОВОДИТЕЛЮ БЕЗ ВОДЫ. ПАМЯТКА\nПо книге П. Безручко «Без воды. Как писать предложения и отчеты для первых лиц»\n\n';
+  MEMO.forEach(function(s){t+=s[0].toUpperCase()+'\n'+s[1].map(function(x){return '- '+x;}).join('\n')+'\n\n';});
+  t+='ПЕРЕД ОТПРАВКОЙ\n'+CHEAT.checks.map(function(x){return '[ ] '+x;}).join('\n')+'\n\nКАК ИСПОЛЬЗОВАТЬ С ИИ\nОткройте ИИ-чат, прикрепите памятку к сообщению (или вставьте её текст) и отправьте вместе с запросом: «'+MEMO_AI+'»\nНе передавайте ИИ реальные данные клиентов и персональные данные.\n';
+  return t;
+}
+function memoCard(){
+  var body='<h4 style="font-size:14px;margin:12px 0 4px">'+esc('Перед отправкой')+'</h4>';
+  var inner=MEMO.map(function(s){return '<h4 style="font-size:14px;margin:12px 0 4px">'+esc(s[0])+'</h4><ul class="facts">'+s[1].map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>';}).join('')
+   +'<h4 style="font-size:14px;margin:12px 0 4px">Перед отправкой</h4><ul class="facts">'+CHEAT.checks.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>'
+   +'<h4 style="font-size:14px;margin:12px 0 4px">Как использовать памятку с ИИ</h4><p>Откройте ИИ-чат, прикрепите к сообщению файл памятки (или вставьте её текст) и отправьте вместе с запросом: «'+esc(MEMO_AI)+'»</p><p class="lab2" style="margin-top:6px">Не передавайте ИИ реальные данные клиентов и персональные данные.</p>';
+  return '<section class="card"><div class="lab2">Памятка</div><h3 style="font-size:16px;margin:6px 0 8px">Памятка на одну страницу</h3>'
+   +'<p style="color:var(--muted);font-size:15px">Цель, структура, содержание, сокращение и чек-лист перед отправкой. В конце совет, как использовать её в ИИ-чате, чтобы он помогал писать письма руководству по этому подходу.</p>'
+   +'<div class="actions"><a class="btn primary" href="../assets/pamyatka-pismo-rukovoditelyu.pdf" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">Открыть памятку (PDF)</a><button class="btn" data-a="memocopy">Скопировать текстом</button></div>'
+   +'<details style="margin-top:12px"><summary style="cursor:pointer;font-family:var(--f-mono);font-size:13px;color:var(--accent-text)">Показать памятку на странице</summary>'+inner+'</details></section>';
+}
+function summaryCard(){
+  return '<section class="card" style="border-color:var(--ok)"><div class="lab2">Итоги курса</div><h3 style="font-size:16px;margin:6px 0 10px">Письмо руководителю без воды: главное</h3>'
+   +'<p style="max-width:68ch">Хорошее письмо руководителю читается за минуту и позволяет принять решение без уточняющих вопросов. Для этого:</p>'
+   +'<ul class="facts" style="margin-top:8px">'
+   +'<li><b>Цель.</b> Назовите действие, которое вам нужно от руководителя, и срок. Вынесите его в тему письма. Делайте «плюс шаг»: после анализа присылайте выводы, после выводов предлагайте подход.</li>'
+   +'<li><b>Структура.</b> Главное в начало: просьба, срок, главный факт в цифрах. Выберите шаблон (предложение, план — факт, выводы — рекомендации) и оставьте 2–4 мысли без пересечений.</li>'
+   +'<li><b>Содержание.</b> Назовите цену, выгоду и вариант «ничего не менять». Заменяйте оценки, обобщения и упущения цифрами и ориентирами. Пишите простыми словами.</li>'
+   +'<li><b>Сокращение.</b> Одна страница. Лишнее уходит в приложение, длинному документу нужна выжимка.</li></ul>'
+   +'<p style="margin-top:10px;max-width:68ch">Перед отправкой проверьте письмо по чек-листу из памятки. Следующий шаг курса: финальное письмо, которое вы напишете и проверите с помощью ИИ-чата.</p></section>';
+}
+function nextId(id){var i=ORDER.indexOf(id);return i>=0&&i<ORDER.length-1?ORDER[i+1]:null;}
+function afterHtml(m){
+  var all=modDone(m);
+  if(!all){return '<div class="locked">Правило и пересказ откроются, когда вы выполните все задания модуля. Сначала действие, потом теория.</div>';}
+  var h='';
+  if(m.profile)h+=profileHtml();
+  h+=fixedHtml(m);
+  h+='<section class="card rule"><h3>'+esc(m.rule.title)+'</h3><ul>'+m.rule.points.map(function(p){return '<li>'+esc(p)+'</li>';}).join('')+'</ul></section>';
+  h+='<section class="card field"><label for="note-'+m.id+'">Ваша выжимка</label><span class="hint">'+esc(m.recap)+' Одна-две фразы своими словами.</span><textarea id="note-'+m.id+'" data-a="note" data-m="'+m.id+'" style="min-height:80px">'+esc(ST.notes[m.id]||'')+'</textarea></section>';
+  var nx=nextId(m.id);
+  if(!nx&&BUILD==='sco1')h+=summaryCard()+memoCard();
+  if(nx){var nm=modById(nx);h+='<div class="actions"><button class="btn primary" data-a="go" data-m="'+nx+'">Дальше: '+esc(nm?nm.title:(nx==='finish'?'Итог':'Шпаргалка'))+'</button></div>';}
+  return h;
+}
+
+/* ---------- финальный модуль ---------- */
+var CRIT=[
+ 'Цель: ясно, какого действия от руководителя я хочу, и этот шаг достижим.',
+ 'Главное в начале: просьба или вывод в первых строках, тема письма отражает суть.',
+ 'Структура: подходит шаблон, главных мыслей 2–4, они не пересекаются и работают на цель.',
+ 'Цена и выгода: названы затраты, отдача, вариант «ничего не менять»; нет манипуляций и запугивания.',
+ 'Конкретика: цифры, единицы измерения, ориентиры для сравнения, без оценок («плохо») и обобщений («все», «всегда»).',
+ 'Простота: короткие предложения, одна мысль в предложении, понятно «кто что делает», нет жаргона.',
+ 'Краткость: нет лишнего, нет повторов, объём не больше одной страницы (ориентир до 200 слов).',
+ 'Срок и следующий шаг: указано, до какой даты нужен ответ и что произойдёт дальше.'
+];
+function scn(){var m=modById('m6');for(var i=0;i<m.scenarios.length;i++){if(m.scenarios[i].id===ST.fin.sc)return m.scenarios[i];}return null;}
+function buildPrompt(){
+  var s=scn(),f=ST.fin;
+  var p='Ты опытный редактор деловой коммуникации. Проверь моё письмо по критериям ниже. Говори прямо и конкретно, но доброжелательно. Не переписывай письмо целиком: покажи, что исправить, и перепиши только начало как образец.\n\n';
+  p+='СИТУАЦИЯ\nКомпания светотехническая, продаёт освещение для бизнеса (B2B).\nСценарий: '+s.title+'. '+s.situation+'\nАдресат: '+s.to+'.\nФакты (единственный допустимый источник цифр, всё остальное считай выдумкой):\n'+s.facts.map(function(x){return '- '+x;}).join('\n')+'\n\n';
+  p+='МОЙ ПЛАН\nЦель, то есть какого действия от руководителя я хочу: '+(f.goal||'не указана')+'\nГлавные мысли:\n1. '+(f.i1||'—')+'\n2. '+(f.i2||'—')+'\n3. '+(f.i3||'—')+'\nВыбранный шаблон: '+(f.tpl||'не указан')+'\n\n';
+  p+='МОЁ ПИСЬМО\nТема: '+(f.subj||'не указана')+'\nТекст:\n'+(f.body||'')+'\n\n';
+  p+='КРИТЕРИИ (каждый оцени от 0 до 2: 0 нет, 1 частично, 2 выполнено)\n'+CRIT.map(function(c,i){return (i+1)+'. '+c;}).join('\n')+'\n\n';
+  p+='ФОРМАТ ОТВЕТА\n1. Таблица: критерий, балл, одна строка пояснения с цитатой из моего письма.\n2. Итоговый балл из 16. 13–16: можно отправлять. 9–12: нужна доработка. 0–8: нужно переписать.\n3. Три главные правки в порядке важности.\n4. Проверка фактов: перечисли цифры из письма, которых нет в списке фактов или которые искажены.\n5. Перепиши только тему и первые две-три строки как образец.\n6. Задай один уточняющий вопрос, который поможет мне улучшить письмо.\nПосле моей правки я пришлю новую версию в этот же чат. Оцени её по тем же критериям и скажи, что изменилось.';
+  return p;
+}
+function scoreMsg(v){
+  if(v===undefined||v===''||v===null)return '';
+  var n=+v;if(isNaN(n)||n<0||n>16||Math.floor(n)!==n)return '<div class="fb"><p>Введите целое число от 0 до 16.</p></div>';
+  if(n>=13)return '<div class="fb"><p><b>Письмо можно отправлять.</b> Внесите главную правку и отправьте.</p></div>';
+  if(n>=9)return '<div class="fb"><p><b>Нужна доработка.</b> Исправьте три главные правки, отправьте новую версию в тот же чат ИИ и обновите балл здесь.</p></div>';
+  return '<div class="fb"><p><b>Письмо нужно переписать.</b> Вернитесь к плану: уточните цель и главные мысли, затем напишите текст заново и проверьте ещё раз.</p></div>';
+}
+function scoreOk(v){var n=+v;return v!==undefined&&v!==''&&!isNaN(n)&&n>=0&&n<=16&&Math.floor(n)===n;}
+function validEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((v||'').trim());}
+function sendReady(){var f=ST.fin;return !!(f.name&&f.name.trim().length>2&&validEmail(f.email)&&scoreOk(f.score)&&wc(f.body)>=20&&f.goal);}
+function sendMsg(){
+  var f=ST.fin;
+  if(f.sendErr)return '<div class="fb" style="border-color:var(--bad)"><p><b>Не удалось отправить.</b> Проверьте интернет и нажмите кнопку ещё раз. Если не получится, скопируйте ответ и передайте организатору.</p><div class="actions" style="margin-top:8px"><button class="btn sm" data-a="copyans">Скопировать ответ</button></div></div>';
+  if(f.sent)return '<div class="fb" style="border-color:var(--ok)"><p><b>Результат отправлен.</b> '+(SHEETS_URL?'Спасибо, курс пройден.':'Курс пройден. Сбор ответов не подключён: адрес таблицы не указан.')+'</p></div>';
+  return '';
+}
+function payload(){
+  var f=ST.fin,s=scn()||{};
+  return {sent_at:new Date().toISOString(),name:f.name||'',email:(f.email||'').trim(),scenario:s.title?(s.title+': '+s.sub):'',goal:f.goal||'',idea1:f.i1||'',idea2:f.i2||'',idea3:f.i3||'',template:f.tpl||'',subject:f.subj||'',body:f.body||'',words:wc(f.body),ai_score:f.score,main_fix:f.main||''};
+}
+function doSend(){
+  var f=ST.fin,p=payload(),btn=$('f-send');
+  function okDone(){f.sent=1;f.sendErr=0;ST.done.final=1;SC.interaction('final_letter',p.words+' слов, балл ИИ '+p.ai_score,'neutral');save();
+    var fe=$('final');if(fe)fe.innerHTML=finalHtml(modById('m6'));var af=$('after');if(af)af.innerHTML=afterHtml(modById('m6'));renderNav();renderMeter();}
+  function fail(){f.sendErr=1;save();var m=$('f-sendmsg');if(m)m.innerHTML=sendMsg();if(btn)btn.disabled=false;}
+  if(!SHEETS_URL){okDone();return;}
+  if(btn)btn.disabled=true;
+  try{fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p)}).then(okDone,fail);}catch(e){fail();}
+}
+function finalHtml(m){
+  var f=ST.fin,s=scn(),h='';
+  if(!f.name){var ln=SC.name();if(ln){f.name=ln.indexOf(',')>0?ln.split(',').slice(1).join(' ').trim()+' '+ln.split(',')[0].trim():ln;}}
+  h+='<section class="card" style="display:flex;flex-direction:column;gap:12px"><div class="lab2">Кто вы</div>'
+   +'<div class="field"><label for="f-name">Фамилия и имя</label><input type="text" id="f-name" data-a="fin" data-k="name" autocomplete="name" value="'+esc(f.name||'')+'"></div>'
+   +'<div class="field"><label for="f-email">Рабочая почта</label><input type="email" id="f-email" data-a="fin" data-k="email" autocomplete="email" placeholder="name@m-tech.am" value="'+esc(f.email||'')+'"></div></section>';
+  h+='<section class="card"><div class="lab2" style="margin-bottom:10px">Шаг 1. Выберите сценарий</div><div class="scn">'+m.scenarios.map(function(x){
+    return '<button data-a="sc" data-s="'+x.id+'" class="'+(f.sc===x.id?'on':'')+'"><b>'+esc(x.title)+'</b><span>'+esc(x.sub)+'. Адресат: '+esc(x.to)+'</span></button>';
+  }).join('')+'</div></section>';
+  if(!s)return h;
+  h+='<section class="card"><div class="lab2" style="margin-bottom:8px">Ситуация и факты</div><p>'+esc(s.situation)+'</p><ul class="facts">'+s.facts.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul><p class="lab2" style="margin-top:10px">Используйте только эти цифры. ИИ проверит, не добавили ли вы лишнего.</p></section>';
+  h+='<section class="card" style="display:flex;flex-direction:column;gap:16px"><div class="lab2">Шаг 2. План письма</div>'
+   +'<div class="field"><label for="f-goal">Цель</label><span class="hint">Какое действие руководителя вам нужно? Один шаг и срок.</span><input type="text" id="f-goal" data-a="fin" data-k="goal" value="'+esc(f.goal||'')+'"></div>'
+   +'<div class="field"><label>Три главные мысли</label><div class="three"><input type="text" id="f-i1" data-a="fin" data-k="i1" aria-label="Главная мысль 1" value="'+esc(f.i1||'')+'"><input type="text" id="f-i2" data-a="fin" data-k="i2" aria-label="Главная мысль 2" value="'+esc(f.i2||'')+'"><input type="text" id="f-i3" data-a="fin" data-k="i3" aria-label="Главная мысль 3" value="'+esc(f.i3||'')+'"></div></div>'
+   +'<div class="field"><label for="f-tpl">Шаблон</label><select id="f-tpl" data-a="fin" data-k="tpl">'+['','Предложение / запрос','План — факт','Выводы — рекомендации','Свой: структура по вопросам руководителя'].map(function(o){return '<option value="'+esc(o)+'"'+((f.tpl||'')===o?' selected':'')+'>'+(o||'Выберите шаблон')+'</option>';}).join('')+'</select><span class="hint">Подсказка: для этого сценария подходит «'+esc(s.template)+'». Но решаете вы.</span></div>'
+   +'<div class="lab2">Шаг 3. Письмо</div>'
+   +'<div class="field"><label for="f-subj">Тема письма</label><input type="text" id="f-subj" data-a="fin" data-k="subj" value="'+esc(f.subj||'')+'"></div>'
+   +'<div class="field"><label for="f-body">Текст письма</label><textarea id="f-body" data-a="fin" data-k="body" style="min-height:220px">'+esc(f.body||'')+'</textarea><span class="counter" id="f-wc">'+wc(f.body)+' слов, ориентир до 200</span></div>'
+   +'<div class="actions"><button class="btn primary" data-a="gen" id="f-gen"'+(wc(f.body)>=20&&f.goal?'':' disabled')+'>Получить промпт для проверки</button></div></section>';
+  if(f.prompt){
+    h+='<section class="card" style="display:flex;flex-direction:column;gap:12px"><div class="lab2">Шаг 4. Проверка через ИИ</div><ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px"><li>Нажмите «Скопировать промпт». Промпт — это готовый текст-запрос для ИИ.</li><li>Откройте ИИ-чат, которым вы пользуетесь (например, Claude или ChatGPT), и начните новый диалог.</li><li>Вставьте промпт в строку сообщения и отправьте.</li><li>ИИ ответит оценкой по 8 критериям и тремя главными правками.</li><li>Исправьте письмо, отправьте новую версию в тот же диалог и введите итоговый балл в шаге 5.</li></ol>'
+     +'<textarea id="f-prompt" class="promptbox" readonly aria-label="Промпт для проверки">'+esc(f.prompt)+'</textarea>'
+     +'<p class="lab2">Не вставляйте в письмо и в ИИ реальные названия клиентов, цены контрактов и персональные данные. Используйте только факты сценария.</p>'
+     +'<div class="actions"><button class="btn primary" data-a="copy">Скопировать промпт</button><button class="btn" data-a="gen">Обновить промпт по текущему тексту</button></div></section>';
+    h+='<section class="card" style="display:flex;flex-direction:column;gap:14px"><div class="lab2">Шаг 5. Результат проверки</div>'
+     +'<div class="field"><label for="f-score">Итоговый балл от ИИ (0–16)</label><span class="hint">Балл покажет ИИ в ответе. Он нужен, чтобы отправить результат.</span><input type="number" min="0" max="16" step="1" id="f-score" data-a="fin" data-k="score" value="'+esc(f.score===undefined?'':f.score)+'" style="max-width:140px"></div>'
+     +'<div class="field"><label for="f-main">Главная правка, которую вы внесёте</label><input type="text" id="f-main" data-a="fin" data-k="main" value="'+esc(f.main||'')+'"></div>'
+     +'<div id="f-msg">'+scoreMsg(f.score)+'</div></section>';
+    h+='<section class="card" style="display:flex;flex-direction:column;gap:12px"><div class="lab2">Шаг 6. Отправьте результат</div>'
+     +'<p style="max-width:68ch">Нажимая «Отправить», вы передаёте организатору курса имя, план, текст письма, балл от ИИ и главную правку. Не включайте в письмо реальные данные клиентов.</p>'
+     +'<div class="actions"><button class="btn primary" data-a="send" id="f-send"'+(sendReady()?'':' disabled')+'>'+(f.sent?'Отправить ещё раз':'Отправить результат')+'</button></div>'
+     +'<div id="f-sendmsg">'+sendMsg()+'</div></section>';
+  }
+  return h;
+}
+
+/* ---------- шпаргалка ---------- */
+function cheatHtml(){
+  return '<div class="modhead"><h2>Шпаргалка</h2><p class="lead">Всё, что нужно держать под рукой перед отправкой письма.</p></div><div class="cheat">'
+   +'<section class="card"><h3>Алгоритм</h3><ol>'+CHEAT.algo.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ol></section>'
+   +'<section class="card"><h3>Три шаблона</h3><ul>'+CHEAT.templates.map(function(x){return '<li><b>'+esc(x[0])+'.</b> '+esc(x[1])+'</li>';}).join('')+'</ul><h3 style="margin-top:16px">Этапы вопроса</h3><p>'+CHEAT.stages.join(' → ')+'</p></section>'
+   +'<section class="card"><h3>Проверка перед отправкой</h3><ul>'+CHEAT.checks.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></section></div>';
+}
+
+/* ---------- каркас ---------- */
+function renderNav(){
+  var h='<div class="grp">Модули</div>';
+  MODS.forEach(function(m,i){
+    var d=modDone(m);
+    h+='<button class="mod'+(ST.cur===m.id?' active':'')+(d?' done':'')+'" data-a="go" data-m="'+m.id+'"><span class="n">'+(d?'✓':i)+'</span><span class="t">'+esc(m.title)+'<small>'+m.time+'</small></span></button>';
+  });
+  $('nav').innerHTML=h;
+}
+function renderMeter(){
+  var req=MODS.filter(function(m){return !m.optional;}),n=req.filter(modDone).length;
+  $('mtxt').textContent=n+' из '+req.length+' модулей';
+  $('mbar').style.width=Math.round(n/req.length*100)+'%';
+}
+function afterChange(){
+  renderNav();renderMeter();
+  var m=modById(ST.cur);
+  if(m&&!m.final){var el=$('after');if(el)el.innerHTML=afterHtml(m);}
+}
+function renderMain(){
+  var main=$('main');
+  var m=modById(ST.cur)||MODS[0];ST.cur=m.id;
+  var h='<div class="modhead"><div class="chips"><span class="chip">'+m.time+'</span>'+(m.optional?'<span class="chip opt">по желанию</span>':'')+'</div><h2>'+esc(m.title)+'</h2><p class="lead">'+esc(m.lead)+'</p></div>';
+  if(m.final){h+='<div id="final">'+finalHtml(m)+'</div><div id="after"></div>';}
+  else{h+=(m.intro?'<section class="card rule">'+m.intro+'</section>':'')+m.tasks.map(renderTask).join('')+'<div id="after">'+afterHtml(m)+'</div>';}
+  main.innerHTML=h+foot();
+  renderNav();renderMeter();
+  if(m.final){var af=$('after');if(af&&ST.done.final)af.innerHTML=afterHtml(m);}
+}
+function foot(){return '<p class="foot"><span id="lmslbl">'+esc(SC.label())+'</span><br>По мотивам книги Павла Безручко «Без воды. Как писать предложения и отчеты для первых лиц». Прогресс сохраняется в LMS: можно закрыть курс и вернуться позже.</p>';}
+function go(id){ST.cur=id;save();renderMain();window.scrollTo(0,0);}
+function toast(t){var d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(function(){d.remove();},2200);}
+
+/* ---------- события ---------- */
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-a]');if(!b)return;
+  var act=b.getAttribute('data-a'),id=b.getAttribute('data-t'),i=+b.getAttribute('data-i'),t=id?TASKS[id]:null,a=id?A(id):null;
+  if(act==='go'){go(b.getAttribute('data-m'));return;}
+  if(act==='single'&&!b.disabled){a.sel=i;ST.done[id]=t.options[i].ok?1:0;redrawTask(id);return;}
+  if(act==='multi'&&!a.checked){a.sel=a.sel||[];a.sel[i]=!a.sel[i];redrawTask(id);return;}
+  if(act==='check'){checkTask(id);return;}
+  if(act==='retry'){ST.tries=ST.tries||{};ST.tries[id]=tries(id)+1;delete ST.ans[id];delete ST.done[id];delete t._ord;redrawTask(id);return;}
+  if(act==='mv'){initOrder(t,a);var d=+b.getAttribute('data-d'),j=i+d;if(j>=0&&j<a.order.length){var x=a.order[i];a.order[i]=a.order[j];a.order[j]=x;}redrawTask(id);return;}
+  if(act==='cat'&&!a.checked){a.pick=a.pick||[];a.pick[i]=+b.getAttribute('data-c');redrawTask(id);return;}
+  if(act==='cut'&&!a.checked){a.off=a.off||[];a.off[i]=!a.off[i];redrawTask(id);return;}
+  if(act==='show'){a.shown=true;a.checks=[];ST.done[id]=0;redrawTask(id);return;}
+  if(act==='rchk'){a.checks=a.checks||[];a.checks[i]=b.checked;var c=0;a.checks.forEach(function(v){if(v)c++;});ST.done[id]=c/t.checks.length;save();
+    var st=document.querySelector('#task-'+id+' .head');var pe=st.querySelector('.st');var np=pill(t);var tmp=document.createElement('div');tmp.innerHTML=np;if(pe)pe.replaceWith(tmp.firstChild);else st.appendChild(tmp.firstChild);afterChange();return;}
+  if(act==='sc'){ST.fin.sc=b.getAttribute('data-s');save();$('final').innerHTML=finalHtml(modById('m6'));return;}
+  if(act==='gen'){ST.fin.prompt=buildPrompt();save();$('final').innerHTML=finalHtml(modById('m6'));renderNav();renderMeter();var pr=$('f-prompt');if(pr)pr.scrollIntoView({behavior:'smooth',block:'center'});return;}
+  if(act==='memocopy'){var tx=memoText();var ok=function(){toast('Памятка скопирована');};
+    var fb2=function(){var ta2=document.createElement('textarea');ta2.value=tx;document.body.appendChild(ta2);ta2.select();try{document.execCommand('copy');ok();}catch(e3){toast('Не удалось скопировать');}ta2.remove();};
+    try{navigator.clipboard.writeText(tx).then(ok,fb2);}catch(e4){fb2();}return;}
+  if(act==='send'){doSend();return;}
+  if(act==='copyans'){var tx2=JSON.stringify(payload(),null,2);var ok2=function(){toast('Ответ скопирован');};
+    var fb3=function(){var t3=document.createElement('textarea');t3.value=tx2;document.body.appendChild(t3);t3.select();try{document.execCommand('copy');ok2();}catch(e5){toast('Не удалось скопировать');}t3.remove();};
+    try{navigator.clipboard.writeText(tx2).then(ok2,fb3);}catch(e6){fb3();}return;}
+  if(act==='copy'){var ta=$('f-prompt');var done=function(){toast('Промпт скопирован');};
+    var fb=function(){ta.focus();ta.select();try{if(document.execCommand('copy')){done();return;}}catch(er){}toast('Текст выделен, нажмите Ctrl+C');};
+    try{navigator.clipboard.writeText(ta.value).then(done,fb);}catch(er2){fb();}return;}
+});
+document.addEventListener('input',function(e){
+  var el=e.target,act=el.getAttribute&&el.getAttribute('data-a');if(!act)return;
+  if(act==='text'){var id=el.getAttribute('data-t');A(id).text=el.value;save();
+    var btn=document.querySelector('#task-'+id+' [data-a="show"]');if(btn)btn.disabled=!(wc(el.value)>=minW(TASKS[id]));
+    var c=el.parentNode.querySelector('.counter');if(c)c.textContent=wc(el.value)+' сл. Нужно от '+minW(TASKS[id])+', чтобы открыть образец';}
+  else if(act==='note'){ST.notes[el.getAttribute('data-m')]=el.value;save();}
+  else if(act==='fin'){ST.fin[el.getAttribute('data-k')]=el.value;save();
+    if(el.getAttribute('data-k')==='body'){var w=$('f-wc');if(w)w.textContent=wc(el.value)+' слов, ориентир до 200';}
+    var g=$('f-gen');if(g)g.disabled=!(wc(ST.fin.body)>=20&&ST.fin.goal);
+    if(el.getAttribute('data-k')==='score'){var fm=$('f-msg');if(fm)fm.innerHTML=scoreMsg(el.value);}
+    var sb=$('f-send');if(sb)sb.disabled=!sendReady();}
+});
+document.addEventListener('change',function(e){
+  var el=e.target;if(el.getAttribute&&el.getAttribute('data-k')==='score'&&scoreOk(el.value)){SC.interaction('final_ai_score',el.value+' из 16','neutral');}if(el.getAttribute&&el.getAttribute('data-a')==='fin'&&el.tagName==='SELECT'){ST.fin.tpl=el.value;save();}
+});
+SC.start();
+if(BUILD==='sco2'){document.documentElement.className+=' solo';}
+load();restorePrompt();
+if(!isPage(ST.cur))ST.cur=MODS[0].id;
+renderMain();
+})();
+
+</script></body></html>
